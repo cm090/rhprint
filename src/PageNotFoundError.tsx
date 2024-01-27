@@ -1,9 +1,7 @@
-import react from "react";
-import { useRouteError } from "react-router-dom";
+import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import Typography from "@mui/joy/Typography";
-import Button from "@mui/joy/Button";
-import { Link } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 const PageNotFoundError = () => {
   const error = useRouteError() as { statusText?: string; message?: string };

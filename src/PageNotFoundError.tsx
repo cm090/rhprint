@@ -13,7 +13,7 @@ const PageNotFoundError = () => {
         size="md"
         variant="soft"
         sx={{
-          width: 200,
+          width: 250,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

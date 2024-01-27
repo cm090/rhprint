@@ -1,6 +1,6 @@
-import './App.css';
+import "./styles.css";
 
-function App() {
+const PrinterList = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +18,6 @@ function App() {
       </header>
     </div>
   );
-}
+};
 
-export default App;
+export default PrinterList;

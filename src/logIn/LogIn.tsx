@@ -5,8 +5,20 @@ import FormLabel from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
+import { useEffect, useState } from "react";
+import {
+  checkForExtension,
+  performLogIn,
+  setListener,
+} from "../apiConnector/papercutApi";
 
 const LogIn = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  checkForExtension();
+  useEffect(() => {
+    setListener();
+  }, []);
   return (
     <main className="pos-middle">
       <CssBaseline />
@@ -37,6 +49,7 @@ const LogIn = () => {
             name="email"
             type="email"
             placeholder="username@rose-hulman.edu"
+            onChange={(e) => setUsername(e.target.value)}
           />
         </FormControl>
         <FormControl>
@@ -45,9 +58,12 @@ const LogIn = () => {
             name="password"
             type="password"
             placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </FormControl>
-        <Button sx={{ mt: 1 }}>Log in</Button>
+        <Button sx={{ mt: 1 }} onClick={() => performLogIn(username, password)}>
+          Log in
+        </Button>
       </Sheet>
     </main>
   );

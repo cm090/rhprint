@@ -4,7 +4,8 @@ const checkForExtension = () => {
   setTimeout(() => {
     if (
       !(window as unknown as { apiExtensionInstalled: boolean })
-        .apiExtensionInstalled && !localStorage.getItem("hasExtension")
+        .apiExtensionInstalled &&
+      !localStorage.getItem("hasExtension")
     ) {
       window.location.href = "/extension-missing";
     } else {

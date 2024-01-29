@@ -25,16 +25,16 @@ const PageNotFoundError = () => {
         <Typography level="body-sm" sx={{ textAlign: "center" }}>
           {error.statusText || error.message}
         </Typography>
-        <Link to="/">
-          <Button
-            variant="solid"
-            size="md"
-            color="primary"
-            sx={{ alignSelf: "center", fontWeight: 600 }}
-          >
-            Return to homepage
-          </Button>
-        </Link>
+        <Button
+          variant="solid"
+          size="md"
+          color="primary"
+          sx={{ alignSelf: "center", fontWeight: 600 }}
+          component={Link}
+          to="/"
+        >
+          Return to homepage
+        </Button>
       </Card>
     </div>
   );

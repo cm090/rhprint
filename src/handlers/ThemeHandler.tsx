@@ -1,29 +1,12 @@
 import { CssBaseline } from "@mui/joy";
-import { CssVarsProvider, extendTheme, getInitColorSchemeScript } from "@mui/joy/styles";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import ExtensionMissingError from "./errors/ExtensionMissingError";
-import PageNotFoundError from "./errors/PageNotFoundError";
-import "./index.css";
-import LogIn from "./logIn/LogIn";
-import App from "./printerList/PrinterList";
+import {
+  CssVarsProvider,
+  extendTheme,
+  getInitColorSchemeScript,
+} from "@mui/joy/styles";
+import RouteHandler from "./RouteHandler";
 
 const ThemeHandler = () => {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <App />,
-      errorElement: <PageNotFoundError />,
-    },
-    {
-      path: "/extension-missing",
-      element: <ExtensionMissingError />,
-    },
-    {
-      path: "/login",
-      element: <LogIn />,
-    },
-  ]);
-
   const theme = extendTheme({
     colorSchemes: {
       light: {
@@ -62,9 +45,9 @@ const ThemeHandler = () => {
   });
 
   return (
-    <CssVarsProvider theme={theme}>
+    <CssVarsProvider theme={theme} defaultMode="system">
       <LightDarkTheme>
-        <RouterProvider router={router} />
+        <RouteHandler />
       </LightDarkTheme>
     </CssVarsProvider>
   );

@@ -11,6 +11,7 @@ import {
   performLogIn,
   setListener,
 } from "../apiConnector/papercutApi";
+import "./styles.css";
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
@@ -43,27 +44,36 @@ const LogIn = () => {
           </Typography>
           <Typography level="body-sm">Log in to continue.</Typography>
         </div>
-        <FormControl>
-          <FormLabel>Email</FormLabel>
-          <Input
-            name="email"
-            type="email"
-            placeholder="username@rose-hulman.edu"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Password</FormLabel>
-          <Input
-            name="password"
-            type="password"
-            placeholder="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </FormControl>
-        <Button sx={{ mt: 1 }} onClick={() => performLogIn(username, password)}>
-          Log in
-        </Button>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            performLogIn(username, password);
+          }}
+          className="form-flex"
+        >
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+            <Input
+              name="email"
+              placeholder="username@rose-hulman.edu"
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </FormControl>
+          <FormControl sx={{ mt: 2 }}>
+            <FormLabel>Password</FormLabel>
+            <Input
+              name="password"
+              type="password"
+              placeholder="password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </FormControl>
+          <Button sx={{ mt: 2 }} type="submit">
+            Log in
+          </Button>
+        </form>
       </Sheet>
     </main>
   );

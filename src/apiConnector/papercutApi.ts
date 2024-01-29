@@ -1,4 +1,5 @@
 let api: PapercutApi;
+let callback = (e: ApiResult) => {};
 
 const checkForExtension = () => {
   setTimeout(() => {
@@ -15,11 +16,19 @@ const checkForExtension = () => {
   }, 300);
 };
 
-const setListener = () => {
-  document.addEventListener("apiResultListener", () => {
-    console.log(JSON.parse(sessionStorage.getItem("apiResult") as string));
-  });
+const setListener = (apiCallback: (e: ApiResult) => void) => {
+  callback = apiCallback;
 };
+
+document.addEventListener("apiResultListener", () => {
+  let res = JSON.parse(sessionStorage.getItem("apiResult") as string);
+  if (res["error-msg"]) {
+    const error = res["error-msg"];
+    delete res["error-msg"];
+    res = { ...res, error };
+  }
+  callback(res);
+});
 
 const performLogIn = (email: string, password: string) => {
   api.logIn(email, password);

@@ -16,10 +16,19 @@ import "./styles.css";
 const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const apiCallback = (e: ApiResult) => {
+    console.log(e);
+    if (!e.success) {
+      setError(e.error);
+    }
+  };
+
   checkForExtension();
   useEffect(() => {
-    setListener();
+    setListener(apiCallback);
   }, []);
+
   return (
     <main className="pos-middle">
       <CssBaseline />
@@ -47,6 +56,7 @@ const LogIn = () => {
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            setError("");
             performLogIn(username, password);
           }}
           className="form-flex"
@@ -73,6 +83,14 @@ const LogIn = () => {
           <Button sx={{ mt: 2 }} type="submit">
             Log in
           </Button>
+          {error && (
+            <Typography
+              level="body-sm"
+              sx={{ mt: 1, textAlign: "center", fontWeight: 600 }}
+            >
+              {error}
+            </Typography>
+          )}
         </form>
       </Sheet>
     </main>

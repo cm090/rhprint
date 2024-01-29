@@ -1,7 +1,8 @@
 import { CssBaseline } from "@mui/joy";
 import { CssVarsProvider, extendTheme, getInitColorSchemeScript } from "@mui/joy/styles";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import PageNotFoundError from "./PageNotFoundError";
+import ExtensionMissingError from "./errors/ExtensionMissingError";
+import PageNotFoundError from "./errors/PageNotFoundError";
 import "./index.css";
 import LogIn from "./logIn/LogIn";
 import App from "./printerList/PrinterList";
@@ -12,6 +13,10 @@ const ThemeHandler = () => {
       path: "/",
       element: <App />,
       errorElement: <PageNotFoundError />,
+    },
+    {
+      path: "/extension-missing",
+      element: <ExtensionMissingError />,
     },
     {
       path: "/login",

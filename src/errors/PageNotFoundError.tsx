@@ -19,25 +19,22 @@ const PageNotFoundError = () => {
           alignItems: "center",
         }}
       >
-        <div>
-          <Typography level="title-lg" sx={{ textAlign: "center" }}>
-            404
-          </Typography>
-          <Typography level="body-sm" sx={{ textAlign: "center" }}>
-            {error.statusText || error.message}
-          </Typography>
-          <Link to="/">
-            <Button
-              variant="solid"
-              size="md"
-              color="primary"
-              aria-label="Explore Bahamas Islands"
-              sx={{ mt: 2, alignSelf: "center", fontWeight: 600 }}
-            >
-              Return to homepage
-            </Button>
-          </Link>
-        </div>
+        <Typography level="title-lg" sx={{ textAlign: "center" }}>
+          404
+        </Typography>
+        <Typography level="body-sm" sx={{ textAlign: "center" }}>
+          {error.statusText || error.message}
+        </Typography>
+        <Link to="/">
+          <Button
+            variant="solid"
+            size="md"
+            color="primary"
+            sx={{ alignSelf: "center", fontWeight: 600 }}
+          >
+            Return to homepage
+          </Button>
+        </Link>
       </Card>
     </div>
   );

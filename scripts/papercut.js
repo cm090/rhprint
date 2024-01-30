@@ -10,7 +10,7 @@ class ApiRequest {
     login: {
       url: `${this.#PAPERCUT_URL}webclient/users/[USERNAME]/log-in`,
       method: "POST",
-    },
+    }
   };
 
   constructor() {
@@ -58,7 +58,7 @@ class ApiRequest {
         })
       )
     ) {
-      window.close();
+      this.#postRequestAction();
     }
   };
 
@@ -97,9 +97,16 @@ class ApiRequest {
             })
           )
         ) {
-          window.close();
+          this.#postRequestAction();
         }
       });
+  };
+
+  /**
+   * Performs an action after the API call is complete
+   */
+  #postRequestAction = () => {
+    window.close();
   };
 }
 

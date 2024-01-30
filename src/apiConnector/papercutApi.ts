@@ -6,11 +6,17 @@ const checkForExtension = () => {
     if (
       !(window as unknown as { apiExtensionInstalled: boolean })
         .apiExtensionInstalled &&
-      !localStorage.getItem("hasExtension")
+      !sessionStorage.getItem("hasExtension")
     ) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          "RHITweaks extension not found. You will not be able to make API calls."
+        );
+        return;
+      }
       window.location.href = "/extension-missing";
     } else {
-      localStorage.setItem("hasExtension", "true");
+      sessionStorage.setItem("hasExtension", "true");
       api = (window as unknown as { api: PapercutApi }).api;
     }
   }, 300);

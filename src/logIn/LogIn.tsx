@@ -6,11 +6,7 @@ import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useState } from "react";
-import {
-  checkForExtension,
-  performLogIn,
-  setListener,
-} from "../apiConnector/papercutApi";
+import { performLogIn, setListener } from "../apiConnector/papercutApi";
 import "./styles.css";
 
 const LogIn = () => {
@@ -24,7 +20,6 @@ const LogIn = () => {
     }
   };
 
-  checkForExtension();
   useEffect(() => {
     setListener(apiCallback);
   }, []);

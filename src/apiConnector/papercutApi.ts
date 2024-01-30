@@ -14,11 +14,15 @@ const checkForExtension = () => {
         );
         return;
       }
-      window.location.href = "/extension-missing";
-    } else {
-      sessionStorage.setItem("hasExtension", "true");
-      api = (window as unknown as { api: PapercutApi }).api;
+      if ([window.location.pathname !== "/extension-missing"]) {
+        window.location.href = "/extension-missing";
+      }
     }
+
+    try {
+      api = (window as unknown as { api: PapercutApi }).api;
+      sessionStorage.setItem("hasExtension", "true");
+    } catch (e) {}
   }, 300);
 };
 

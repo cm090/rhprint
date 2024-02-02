@@ -3,12 +3,18 @@ import ExtensionMissingError from "../errors/ExtensionMissingError";
 import PageNotFoundError from "../errors/PageNotFoundError";
 import LogIn from "../logIn/LogIn";
 import App from "../printerList/PrinterList";
+import ExtensionCheck from "./ExtensionCheck";
 
 const RouteHandler = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App />,
+      element: (
+        <>
+          <ExtensionCheck />
+          <App />
+        </>
+      ),
       errorElement: <PageNotFoundError />,
     },
     {
@@ -17,7 +23,12 @@ const RouteHandler = () => {
     },
     {
       path: "/login",
-      element: <LogIn />,
+      element: (
+        <>
+          <ExtensionCheck />
+          <LogIn />
+        </>
+      ),
     },
   ]);
   return <RouterProvider router={router} />;

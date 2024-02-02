@@ -37,5 +37,8 @@
                 "http://print.rose-hulman.edu:9191/*"
             ]
         }
-    ]
+    ],
+    "background": {
+        "service_worker": "scripts/background.js"
+    }
 }

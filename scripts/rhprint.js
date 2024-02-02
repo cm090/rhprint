@@ -1,6 +1,4 @@
 class ApiExtension {
-  #PAPERCUT_URL = "https://print.rose-hulman.edu:9192/client";
-
   constructor() {
     document.addEventListener("chromeStorageRequest", this.#onDataChanged);
   }
@@ -67,7 +65,7 @@ class ApiExtension {
   };
 
   /**
-   * Send API request headers to Chrome storage and open Papercut website
+   * Send API request headers to Chrome storage, and service worker will open Papercut website
    *
    * @param method "GET" or "POST"
    * @param data additional data for POST requests
@@ -79,8 +77,6 @@ class ApiExtension {
         detail: { data: { request: { method, data, isRequest: true } } },
       })
     );
-
-    window.open(this.#PAPERCUT_URL, "_blank");
   };
 }
 

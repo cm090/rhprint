@@ -59,7 +59,7 @@ const logInListener = () => {
   document.removeEventListener("apiResultListener", logInListener);
   if (res.success && window.location.pathname === "/login") {
     window.location.href = "/";
-  } else if (!res.success) {
+  } else if (!(res.success || window.location.pathname === "/login")) {
     window.location.href = "/login";
   }
 

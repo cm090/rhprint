@@ -1,16 +1,44 @@
 class ApiRequest {
   #PAPERCUT_URL = "https://print.rose-hulman.edu:9192/rpc/api/rest/internal/";
+  #MOBILERELEASE_ENDPOINT = "mobilerelease/api/";
+  #WEBCLIENT_ENDPOINT = "webclient/";
   #endpoints = {
-    print: {
-      url: `${
-        this.#PAPERCUT_URL
-      }mobilerelease/api/held-jobs/release?username=[USERNAME]`,
+    login: {
+      url: `${this.#PAPERCUT_URL}${
+        this.#WEBCLIENT_ENDPOINT
+      }users/[USERNAME]/log-in`,
       method: "POST",
     },
-    login: {
-      url: `${this.#PAPERCUT_URL}webclient/users/[USERNAME]/log-in`,
+    print: {
+      url: `${this.#PAPERCUT_URL}${
+        this.#MOBILERELEASE_ENDPOINT
+      }held-jobs/release?username=[USERNAME]`,
       method: "POST",
-    }
+    },
+    cancel: {
+      url: `${this.#PAPERCUT_URL}${
+        this.#MOBILERELEASE_ENDPOINT
+      }held-jobs/cancel?username=[USERNAME]`,
+      method: "POST",
+    },
+    recentPrinters: {
+      url: `${this.#PAPERCUT_URL}${
+        this.#MOBILERELEASE_ENDPOINT
+      }recent-popular-printers?username=[USERNAME]`,
+      method: "GET",
+    },
+    allPrinters: {
+      url: `${this.#PAPERCUT_URL}${
+        this.#MOBILERELEASE_ENDPOINT
+      }all-printers?username=[USERNAME]`,
+      method: "GET",
+    },
+    jobs: {
+      url: `${this.#PAPERCUT_URL}${
+        this.#MOBILERELEASE_ENDPOINT
+      }held-jobs?username=[USERNAME]&printerName=[PRINTER]`,
+      method: "GET",
+    },
   };
 
   constructor() {
@@ -73,6 +101,10 @@ class ApiRequest {
       apiCall.url = apiCall.url.replace("[USERNAME]", request.data.username);
       delete request.data.username;
     }
+    if (apiCall.url.includes("[PRINTER]")) {
+      apiCall.url = apiCall.url.replace("[PRINTER]", request.data.printerName);
+      delete request.data.printerName;
+    }
     const params = new URLSearchParams();
     for (const [key, value] of Object.entries(request.data)) {
       if (Array.isArray(value)) {
@@ -83,10 +115,16 @@ class ApiRequest {
         params.append(key, value);
       }
     }
-    fetch(apiCall.url, {
+
+    const apiData = {
       method: apiCall.method,
       body: params,
-    })
+    };
+    if (apiCall.method === "GET") {
+      delete apiData.body;
+    }
+
+    fetch(apiCall.url, apiData)
       .then((res) => res.json())
       .then((res) => {
         console.log(res);

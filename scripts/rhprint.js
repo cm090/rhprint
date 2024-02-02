@@ -22,8 +22,19 @@ class ApiExtension {
 
   logOut = (username) => this.#performApiCall("logout", { username });
 
-  releasePrint = (username, printerName, jobIds) =>
+  releasePrints = (username, printerName, jobIds) =>
     this.#performApiCall("print", { username, printerName, jobIds });
+
+  cancelPrints = (username, jobIds) =>
+    this.#performApiCall("cancel", { username, jobIds });
+
+  recentPrinters = (username) =>
+    this.#performApiCall("recentPrinters", { username });
+
+  allPrinters = (username) => this.#performApiCall("allPrinters", { username });
+
+  listJobs = (username, printerName) =>
+    this.#performApiCall("jobs", { username, printerName });
 
   /**
    * Stores API results in browser storage

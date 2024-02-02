@@ -46,7 +46,7 @@ const tryCookieLogin = () => {
   if (user && token) {
     document.addEventListener("apiResultListener", logInListener);
     api.cookieLogIn(user, token);
-  } else {
+  } else if (window.location.pathname !== "/login") {
     window.location.href = "/login";
   }
 };

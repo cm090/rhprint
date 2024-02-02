@@ -87,11 +87,21 @@ document.addEventListener("apiResultListener", () => {
 
 /**
  * Perform a log in attempt with the Papercut API.
- * @param email the user's username or email address
+ * @param user the user's username or email address
  * @param password the user's password
  */
-const performLogIn = (email: string, password: string) => {
-  api.logIn(email, password);
+const performLogIn = (user: string, password: string) => {
+  api.logIn(user, password);
 };
 
-export { checkForExtension, performLogIn, setListener };
+/**
+ * Perform a log out attempt with the Papercut API.
+ * @param user the user's username or email address
+ */
+const performLogOut = (user: string) => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  api.logOut(user);
+};
+
+export { checkForExtension, performLogIn, performLogOut, setListener };

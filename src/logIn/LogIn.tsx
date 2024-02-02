@@ -18,6 +18,7 @@ const LogIn = () => {
     if (!e.success) {
       setError(e.error);
     }
+    window.location.href = "/";
   };
 
   useEffect(() => {

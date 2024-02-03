@@ -80,5 +80,9 @@ class ApiExtension {
   };
 }
 
-window.apiExtensionInstalled = true;
-window.api = new ApiExtension();
+const main = () => {
+  window.api = new ApiExtension();
+  window.dispatchEvent(new CustomEvent("apiReady"));
+};
+
+main();

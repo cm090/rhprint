@@ -10,10 +10,9 @@ const RouteHandler = () => {
     {
       path: "/",
       element: (
-        <>
-          <ExtensionCheck />
+        <ExtensionCheck>
           <App />
-        </>
+        </ExtensionCheck>
       ),
       errorElement: <PageNotFoundError />,
     },
@@ -24,10 +23,9 @@ const RouteHandler = () => {
     {
       path: "/login",
       element: (
-        <>
-          <ExtensionCheck />
-          <LogIn />
-        </>
+          <ExtensionCheck>
+            <LogIn />
+          </ExtensionCheck>
       ),
     },
   ]);

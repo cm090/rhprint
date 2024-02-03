@@ -2,27 +2,11 @@ let api: PapercutApi;
 let callback = (e: ApiResult) => {};
 
 /**
- * Looks for a window variable set by the helper extension. If found, attempt to log in with a session cookie.
+ * Attempt to log in with a session cookie.
  */
-const checkForExtension = () => {
-  setTimeout(() => {
-    if (
-      !(window as unknown as { apiExtensionInstalled: boolean })
-        .apiExtensionInstalled &&
-      !sessionStorage.getItem("hasExtension")
-    ) {
-      if (process.env.NODE_ENV === "development") {
-        console.warn(
-          "RHITweaks extension not found. You will not be able to make API calls."
-        );
-        return;
-      }
-      window.location.href = "/extension-missing";
-    }
-
+const apiHeartbeat = () => {
     const prepareApi = () => {
       api = (window as unknown as { api: PapercutApi }).api;
-      sessionStorage.setItem("hasExtension", "true");
       tryCookieLogin();
     };
 
@@ -34,7 +18,6 @@ const checkForExtension = () => {
       }
     };
     apiInterval();
-  }, 300);
 };
 
 /**
@@ -104,4 +87,4 @@ const performLogOut = (user: string) => {
   api.logOut(user);
 };
 
-export { checkForExtension, performLogIn, performLogOut, setListener };
+export { apiHeartbeat, performLogIn, performLogOut, setListener };

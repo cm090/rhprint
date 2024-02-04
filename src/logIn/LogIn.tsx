@@ -5,11 +5,11 @@ import FormLabel from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { performLogIn, setListener } from "../apiConnector/papercutApi";
-import "./styles.css";
+import { useState } from "react";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
+import { performLogIn } from "../apiConnector/papercutApi";
+import "./styles.css";
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
@@ -18,18 +18,21 @@ const LogIn = () => {
   const [isWaiting, setIsWaiting] = useState(false);
   const nav = useNavigate();
 
-  useEffect(() => {
-    const apiCallback = (e: ApiResult) => {
+  const logIn = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsWaiting(true);
+    performLogIn(username, password).then((e: ApiResult) => {
       setIsWaiting(false);
-      console.log(e);
-      if (!e.success) {
-        setError(e.error || "Error logging in");
-      } else {
+      if (e.result.success && e.result.realname && e.result.authCookie) {
+        localStorage.setItem("user", e.result.realname);
+        localStorage.setItem("token", e.result.authCookie.split(":")[1]);
         nav("/");
+      } else {
+        setError(e.result.error as string);
       }
-    };
-    setListener(apiCallback);
-  }, [nav]);
+    });
+  };
 
   return (
     <>
@@ -59,15 +62,7 @@ const LogIn = () => {
             </Typography>
             <Typography level="body-sm">Log in to continue.</Typography>
           </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              setError("");
-              setIsWaiting(true);
-              performLogIn(username, password);
-            }}
-            className="form-flex"
-          >
+          <form onSubmit={logIn} className="form-flex">
             <FormControl>
               <FormLabel>Email</FormLabel>
               <Input

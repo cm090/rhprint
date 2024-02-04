@@ -13,7 +13,10 @@ const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isWaiting, setIsWaiting] = useState(false);
+
   const apiCallback = (e: ApiResult) => {
+    setIsWaiting(false);
     console.log(e);
     if (!e.success) {
       setError(e.error);
@@ -53,6 +56,7 @@ const LogIn = () => {
           onSubmit={(e) => {
             e.preventDefault();
             setError("");
+            setIsWaiting(true);
             performLogIn(username, password);
           }}
           className="form-flex"
@@ -63,6 +67,7 @@ const LogIn = () => {
               name="email"
               placeholder="username@rose-hulman.edu"
               onChange={(e) => setUsername(e.target.value)}
+              disabled={isWaiting}
               required
             />
           </FormControl>
@@ -73,10 +78,11 @@ const LogIn = () => {
               type="password"
               placeholder="password"
               onChange={(e) => setPassword(e.target.value)}
+              disabled={isWaiting}
               required
             />
           </FormControl>
-          <Button sx={{ mt: 2 }} type="submit">
+          <Button loading={isWaiting} sx={{ mt: 2 }} type="submit">
             Log in
           </Button>
           {error && (

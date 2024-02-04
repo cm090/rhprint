@@ -49,8 +49,7 @@ class ApiRequest {
   }
 
   /**
-   * Checks request data to prepare API call
-   *
+   * Checks request data to prepare API call.
    * @param request request headers
    */
   #runCall = ({
@@ -71,7 +70,11 @@ class ApiRequest {
     } catch (e) {
       document.dispatchEvent(
         new CustomEvent("chromeStorageSet", {
-          detail: { data: { success: false, error: e, call: request.method } },
+          detail: {
+            data: {
+              request: { success: false, error: e, call: request.method },
+            },
+          },
         })
       );
       this.#postRequestAction();
@@ -79,7 +82,7 @@ class ApiRequest {
   };
 
   /**
-   * Performs log out request
+   * Performs log out request.
    */
   #performLogOut = () => {
     let responseData;
@@ -92,15 +95,14 @@ class ApiRequest {
 
     document.dispatchEvent(
       new CustomEvent("chromeStorageSet", {
-        detail: { data: { request: responseData, call: "logout" } },
+        detail: { data: { request: { result: responseData, call: "logout" } } },
       })
     );
     this.#postRequestAction();
   };
 
   /**
-   * Performs API call from a predefined endpoint
-   *
+   * Performs API call from a predefined endpoint.
    * @param request request headers
    */
   #apiRequest = (request) => {
@@ -133,17 +135,15 @@ class ApiRequest {
     }
 
     fetch(apiCall.url, apiData)
-      .then((res) => {
-        try {
-          return res.json();
-        } catch (e) {
-          return { success: false, error: e };
-        }
-      })
+      .then((res) =>
+        res.ok ? res.json() : { success: false, error: res.statusText }
+      )
       .then((res) => {
         document.dispatchEvent(
           new CustomEvent("chromeStorageSet", {
-            detail: { data: { request: res, call: request.method } },
+            detail: {
+              data: { request: { result: res, call: request.method } },
+            },
           })
         );
         this.#postRequestAction();
@@ -151,11 +151,9 @@ class ApiRequest {
   };
 
   /**
-   * Performs an action after the API call is complete
+   * Performs an action after the API call is complete.
    */
-  #postRequestAction = () => {
-    window.close();
-  };
+  #postRequestAction = () => window.close();
 }
 
 new ApiRequest();

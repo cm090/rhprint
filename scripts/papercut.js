@@ -72,7 +72,10 @@ class ApiRequest {
         new CustomEvent("chromeStorageSet", {
           detail: {
             data: {
-              request: { success: false, error: e, call: request.method },
+              request: {
+                result: { success: false, error: e },
+                call: request.method,
+              },
             },
           },
         })
@@ -139,6 +142,11 @@ class ApiRequest {
         res.ok ? res.json() : { success: false, error: res.statusText }
       )
       .then((res) => {
+        if (res["error-msg"]) {
+          const error = res["error-msg"];
+          delete res["error-msg"];
+          res.error = error;
+        }
         document.dispatchEvent(
           new CustomEvent("chromeStorageSet", {
             detail: {

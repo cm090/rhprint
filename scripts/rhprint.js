@@ -38,16 +38,12 @@ class ApiExtension {
   #performApiCall = (method, data) =>
     navigator.locks.request(
       "apiRequest",
-      (lock) =>
-        new Promise((res, rej) => {
+      () =>
+        new Promise((res) => {
           const onDataChanged = ({ detail }) => {
             const data = detail.changes.request.newValue;
             if (!data || data.isRequest) {
               return;
-            }
-            if (data.call === "login" && data.success) {
-              localStorage.setItem("token", data.authCookie.split(":")[1]);
-              localStorage.setItem("user", data.realname);
             }
             res(data);
           };

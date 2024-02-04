@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ExtensionMissingError from "../errors/ExtensionMissingError";
 import PageNotFoundError from "../errors/PageNotFoundError";
 import LogIn from "../logIn/LogIn";
-import App from "../printerList/PrinterList";
+import Dashboard from "../printerList/Dashboard";
 import ExtensionCheck from "./ExtensionCheck";
 
 const RouteHandler = () => {
@@ -11,7 +11,7 @@ const RouteHandler = () => {
       path: "/",
       element: (
         <ExtensionCheck>
-          <App />
+          <Dashboard />
         </ExtensionCheck>
       ),
       errorElement: <PageNotFoundError />,

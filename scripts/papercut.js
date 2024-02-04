@@ -58,12 +58,23 @@ class ApiRequest {
       res: { request },
     },
   }) => {
-    if (request === null || !request.isRequest) {
-      return;
-    } else if (request.method === "logout") {
-      this.#performLogOut();
-    } else {
-      this.#apiRequest(request);
+    try {
+      if (request === null || !request.isRequest) {
+        return;
+      } else if (!request.data.username) {
+        throw "User is null";
+      } else if (request.method === "logout") {
+        this.#performLogOut();
+      } else {
+        this.#apiRequest(request);
+      }
+    } catch (e) {
+      document.dispatchEvent(
+        new CustomEvent("chromeStorageSet", {
+          detail: { data: { success: false, error: e, call: request.method } },
+        })
+      );
+      this.#postRequestAction();
     }
   };
 
@@ -79,15 +90,12 @@ class ApiRequest {
       responseData = { success: false };
     }
 
-    if (
-      document.dispatchEvent(
-        new CustomEvent("chromeStorageSet", {
-          detail: { data: { request: responseData } },
-        })
-      )
-    ) {
-      this.#postRequestAction();
-    }
+    document.dispatchEvent(
+      new CustomEvent("chromeStorageSet", {
+        detail: { data: { request: responseData, call: "logout" } },
+      })
+    );
+    this.#postRequestAction();
   };
 
   /**
@@ -125,18 +133,20 @@ class ApiRequest {
     }
 
     fetch(apiCall.url, apiData)
-      .then((res) => res.json())
       .then((res) => {
-        console.log(res);
-        if (
-          document.dispatchEvent(
-            new CustomEvent("chromeStorageSet", {
-              detail: { data: { request: res } },
-            })
-          )
-        ) {
-          this.#postRequestAction();
+        try {
+          return res.json();
+        } catch (e) {
+          return { success: false, error: e };
         }
+      })
+      .then((res) => {
+        document.dispatchEvent(
+          new CustomEvent("chromeStorageSet", {
+            detail: { data: { request: res, call: request.method } },
+          })
+        );
+        this.#postRequestAction();
       });
   };
 

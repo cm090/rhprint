@@ -1,11 +1,11 @@
 import { Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
-import "./styles.css";
 import {
   performGetAllPrinters,
   performGetRecentPrinters,
 } from "../apiConnector/papercutApi";
 import Printer from "./Printer";
+import "./styles.css";
 
 const PrinterList = () => {
   const [recentPrinters, setRecentPrinters] = useState<PrinterDetails[]>([]);

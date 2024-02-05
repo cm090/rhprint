@@ -116,12 +116,8 @@ const performCancelPrints = (user: string, jobIds: string[]) =>
   api.cancelPrints(user, jobIds);
 
 export {
-  apiHeartbeat,
-  performLogIn,
-  performLogOut,
-  performGetAllPrinters,
+  apiHeartbeat, performCancelPrints, performGetAllPrinters,
   performGetRecentPrinters,
-  performListJobs,
-  performReleasePrints,
-  performCancelPrints,
+  performListJobs, performLogIn,
+  performLogOut, performReleasePrints
 };

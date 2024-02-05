@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Dashboard from "../dashboard/Dashboard";
 import ExtensionMissingError from "../errors/ExtensionMissingError";
 import PageNotFoundError from "../errors/PageNotFoundError";
 import LogIn from "../logIn/LogIn";
-import Dashboard from "../printerList/Dashboard";
 import ExtensionCheck from "./ExtensionCheck";
 
 const RouteHandler = () => {

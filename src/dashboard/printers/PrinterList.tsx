@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {
   performGetAllPrinters,
   performGetRecentPrinters,
-} from "../apiConnector/papercutApi";
+} from "../../apiConnector/papercutApi";
 import Printer from "./Printer";
 import "./styles.css";
 

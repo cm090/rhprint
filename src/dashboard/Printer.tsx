@@ -1,7 +1,11 @@
-import { Typography } from "@mui/joy";
+import { ListItemButton, ListItemContent } from "@mui/joy";
 
 const Printer = ({ details }: { details: PrinterDetails }) => {
-  return <Typography>{details.printerName}</Typography>;
+  return (
+    <ListItemButton>
+      <ListItemContent>{details.printerName}</ListItemContent>
+    </ListItemButton>
+  );
 };
 
 export default Printer;

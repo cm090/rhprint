@@ -13,8 +13,12 @@ code {
 }
 
 .pos-middle {
+  height: 100vh !important;
+}
+
+.flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100%;
 }

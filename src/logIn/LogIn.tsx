@@ -41,7 +41,7 @@ const LogIn = () => {
       <Helmet>
         <title>Login | RHprint</title>
       </Helmet>
-      <main className="pos-middle">
+      <main className="pos-middle flex-center">
         <CssBaseline />
         <Sheet
           sx={{

@@ -2,37 +2,27 @@ import { CircularProgress } from "@mui/joy";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
-import { apiHeartbeat } from "../apiConnector/papercutApi";
+import { apiHeartbeat, extensionCheck } from "../apiConnector/papercutApi";
 
 const ExtensionCheck = ({ children }: { children: JSX.Element }) => {
   const [apiReady, setApiReady] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
+    extensionCheck(nav);
     window.addEventListener("apiReady", () => {
-      apiHeartbeat(nav).then(() => setApiReady(true));
+      apiHeartbeat().then(() => setApiReady(true));
     });
-    if (apiReady) {
-      return;
-    }
-    setTimeout(() => {
-      setApiReady((status) => {
-        if (!status) {
-          nav("/extension-missing");
-        }
-        return status;
-      });
-    }, 1000);
-  }, [apiReady, nav]);
+  }, [nav]);
 
   return apiReady ? (
     children
   ) : (
     <>
       <Helmet>
-        <title>Loading... | RHprint</title>
+        <title>Loading | RHprint</title>
       </Helmet>
-      <div className="pos-middle">
+      <div className="pos-middle flex-center">
         <CircularProgress size="lg" />
       </div>
     </>

@@ -1,17 +1,31 @@
 import { NavigateFunction } from "react-router-dom";
 
+let isExtensionInstalled = false;
 let api: PapercutApi;
 let nav: NavigateFunction;
 
 /**
- * Attempt to log in with a session cookie.
+ * Check if the RHITweaks extension is installed.
  * @param navigator the navigation function
  */
-const apiHeartbeat = async (navigator: NavigateFunction): Promise<void> => {
+const extensionCheck = (navigator: NavigateFunction): void => {
+  nav = navigator;
+  setTimeout(() => {
+    if (!isExtensionInstalled) {
+      nav("/extension-missing");
+    }
+  }, 1000);
+};
+
+/**
+ * Attempt to log in with a session cookie.
+ */
+const apiHeartbeat = async (): Promise<void> => {
+  isExtensionInstalled = true;
+
   const prepareApi = (): Promise<void> => {
     try {
       api = (window as unknown as { api: PapercutApi }).api;
-      nav = navigator;
       return Promise.resolve();
     } catch (e) {
       return new Promise(() => setTimeout(prepareApi, 100));
@@ -43,11 +57,10 @@ const tryCookieLogin = async (): Promise<void> => {
         nav("/login");
       }
     }
-    return await Promise.resolve();
   } else if (window.location.pathname !== "/login") {
     nav("/login");
   }
-  return Promise.reject();
+  return Promise.resolve();
 };
 
 /**
@@ -111,6 +124,7 @@ const performCancelPrints = (user: string, jobIds: string[]) =>
 
 export {
   apiHeartbeat,
+  extensionCheck,
   performCancelPrints,
   performGetAllPrinters,
   performGetRecentPrinters,

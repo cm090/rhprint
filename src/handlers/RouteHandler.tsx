@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
-import PrinterList from "../dashboard/printers/PrinterList";
+import PrinterList from "../dashboard/printers/PrinterInfo";
 import ExtensionMissingError from "../errors/ExtensionMissingError";
 import PageNotFoundError from "../errors/PageNotFoundError";
 import LogIn from "../logIn/LogIn";

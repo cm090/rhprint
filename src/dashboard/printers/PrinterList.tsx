@@ -1,14 +1,26 @@
 import { SearchRounded } from "@mui/icons-material";
-import { Box, Input, List, ListItem, ListSubheader } from "@mui/joy";
+import {
+  Box,
+  CircularProgress,
+  Input,
+  List,
+  ListItem,
+  ListSubheader,
+} from "@mui/joy";
 import { useEffect, useState } from "react";
 import {
   performGetAllPrinters,
   performGetRecentPrinters,
 } from "../../apiConnector/papercutApi";
 import Printer from "./Printer";
-import "../styles.css";
 
-const PrinterList = () => {
+const PrinterList = ({
+  selected,
+  setSelected,
+}: {
+  selected: string;
+  setSelected: (printerName: string) => void;
+}) => {
   const [recentPrinters, setRecentPrinters] = useState<PrinterDetails[]>([]);
   const [popularPrinters, setPopularPrinters] = useState<PrinterDetails[]>([]);
   const [allPrinters, setAllPrinters] = useState<PrinterDetails[]>([]);
@@ -23,6 +35,10 @@ const PrinterList = () => {
         }
         if (e.result.recentPrinters) {
           setRecentPrinters(e.result.recentPrinters);
+          const firstPrinter = e.result.recentPrinters[0];
+          setSelected(
+            `${firstPrinter.serverName}\\${firstPrinter.printerName}`
+          );
         }
         if (e.result.popularPrinters) {
           setPopularPrinters(e.result.popularPrinters);
@@ -36,7 +52,7 @@ const PrinterList = () => {
         setAllPrinters(e.result as unknown as PrinterDetails[]);
       })
       .catch((err: string) => console.log(err));
-  }, [user]);
+  }, [user, setSelected]);
 
   return (
     <Box
@@ -52,7 +68,9 @@ const PrinterList = () => {
       {!recentPrinters.length ||
       !popularPrinters.length ||
       !allPrinters.length ? (
-        <div>Loading...</div>
+        <div className="flex-center">
+          <CircularProgress size="lg" />
+        </div>
       ) : (
         <List
           size="sm"
@@ -83,6 +101,11 @@ const PrinterList = () => {
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`recent-${printer.printerName}`}
+                    selected={
+                      selected ===
+                      `${printer.serverName}\\${printer.printerName}`
+                    }
+                    setSelected={setSelected}
                   />
                 ))}
               </ListItem>
@@ -94,6 +117,11 @@ const PrinterList = () => {
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`popular-${printer.printerName}`}
+                    selected={
+                      selected ===
+                      `${printer.serverName}\\${printer.printerName}`
+                    }
+                    setSelected={setSelected}
                   />
                 ))}
               </ListItem>
@@ -103,6 +131,11 @@ const PrinterList = () => {
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`all-${printer.printerName}`}
+                    selected={
+                      selected ===
+                      `${printer.serverName}\\${printer.printerName}`
+                    }
+                    setSelected={setSelected}
                   />
                 ))}
               </ListItem>
@@ -116,6 +149,11 @@ const PrinterList = () => {
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`all-${printer.printerName}`}
+                    selected={
+                      selected ===
+                      `${printer.serverName}\\${printer.printerName}`
+                    }
+                    setSelected={setSelected}
                   />
                 ))}
             </ListItem>

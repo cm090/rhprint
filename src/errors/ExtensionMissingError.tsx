@@ -7,7 +7,7 @@ const ExtensionMissingError = () => {
       <Helmet>
         <title>Extension Missing | RHprint</title>
       </Helmet>
-      <div className="pos-middle">
+      <div className="pos-middle flex-center">
         <Card
           color="primary"
           orientation="horizontal"

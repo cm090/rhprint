@@ -2,7 +2,19 @@ import { Box } from "@mui/joy";
 import { Helmet } from "react-helmet";
 import Navigation from "./Navigation";
 
-const Dashboard = ({ children, page }: { children: React.ReactNode, page: string }) => {
+const Dashboard = ({
+  children,
+  page,
+}: {
+  children: React.ReactNode;
+  page: string;
+}) => {
+  const titleMap: { [key: string]: string } = {
+    home: "Home",
+    queue: "Print queue",
+    help: "How to print",
+  };
+
   return (
     <Box
       sx={{
@@ -18,7 +30,7 @@ const Dashboard = ({ children, page }: { children: React.ReactNode, page: string
       }}
     >
       <Helmet>
-        <title>Dashboard | RHprint</title>
+        <title>{titleMap[page] || "Dashboard"} | RHprint</title>
       </Helmet>
       <Navigation page={page} />
       {children}

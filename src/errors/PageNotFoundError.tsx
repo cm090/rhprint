@@ -10,7 +10,7 @@ const PageNotFoundError = () => {
       <Helmet>
         <title>Not Found | RHprint</title>
       </Helmet>
-      <div className="pos-middle">
+      <div className="pos-middle flex-center">
         <Card
           color="primary"
           orientation="horizontal"

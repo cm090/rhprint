@@ -6,7 +6,7 @@ import {
   performGetRecentPrinters,
 } from "../../apiConnector/papercutApi";
 import Printer from "./Printer";
-import "./styles.css";
+import "../styles.css";
 
 const PrinterList = () => {
   const [recentPrinters, setRecentPrinters] = useState<PrinterDetails[]>([]);

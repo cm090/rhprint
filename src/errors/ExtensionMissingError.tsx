@@ -1,6 +1,4 @@
-import Button from "@mui/joy/Button";
-import Card from "@mui/joy/Card";
-import Typography from "@mui/joy/Typography";
+import { Button, Card, Typography } from "@mui/joy";
 import { Helmet } from "react-helmet";
 
 const ExtensionMissingError = () => {

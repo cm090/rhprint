@@ -1,12 +1,8 @@
 import { Box } from "@mui/joy";
-import { useState } from "react";
 import { Helmet } from "react-helmet";
 import Navigation from "./Navigation";
-import PrinterList from "./PrinterList";
 
-const Dashboard = () => {
-  const [index, setIndex] = useState(0);
-
+const Dashboard = ({ children, page }: { children: React.ReactNode, page: string }) => {
   return (
     <Box
       sx={{
@@ -24,20 +20,8 @@ const Dashboard = () => {
       <Helmet>
         <title>Dashboard | RHprint</title>
       </Helmet>
-      <Navigation index={index} setIndex={setIndex} />
-      {index === 0 && (
-        <Box
-          sx={{
-            p: 2,
-            bgcolor: "background.surface",
-            borderRight: "1px solid",
-            borderColor: "divider",
-            maxHeight: "calc(100vh - 64px)", overflowY: "scroll"
-          }}
-        >
-          <PrinterList />
-        </Box>
-      )}
+      <Navigation page={page} />
+      {children}
     </Box>
   );
 };

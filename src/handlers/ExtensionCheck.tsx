@@ -10,8 +10,7 @@ const ExtensionCheck = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     window.addEventListener("apiReady", () => {
-      setApiReady(true);
-      apiHeartbeat(nav);
+      apiHeartbeat(nav).then(() => setApiReady(true));
     });
     if (apiReady) {
       return;

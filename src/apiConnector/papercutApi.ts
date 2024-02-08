@@ -7,53 +7,47 @@ let nav: NavigateFunction;
  * Attempt to log in with a session cookie.
  * @param navigator the navigation function
  */
-const apiHeartbeat = (navigator: NavigateFunction) => {
-  const prepareApi = () => {
-    api = (window as unknown as { api: PapercutApi }).api;
-    nav = navigator;
-    tryCookieLogin();
-  };
-
-  const apiInterval = () => {
+const apiHeartbeat = async (navigator: NavigateFunction): Promise<void> => {
+  const prepareApi = (): Promise<void> => {
     try {
-      prepareApi();
+      api = (window as unknown as { api: PapercutApi }).api;
+      nav = navigator;
+      return Promise.resolve();
     } catch (e) {
-      setTimeout(apiInterval, 100);
+      return new Promise(() => setTimeout(prepareApi, 100));
     }
   };
 
-  apiInterval();
+  await prepareApi();
+  return await tryCookieLogin();
 };
 
 /**
  * Attempt to log in with a session cookie.
  */
-const tryCookieLogin = () => {
+const tryCookieLogin = async (): Promise<void> => {
   const user = localStorage.getItem("user");
   const token = localStorage.getItem("token");
   if (user && token) {
-    api.cookieLogIn(user, token).then((data: ApiResult) => {
-      if (
-        data.result.success &&
-        data.result.realname &&
-        data.result.authCookie
-      ) {
-        localStorage.setItem("user", data.result.realname);
-        localStorage.setItem("token", data.result.authCookie.split(":")[1]);
-        if (window.location.pathname === "/login") {
-          nav("/");
-        }
-      } else {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
-        if (window.location.pathname !== "/login") {
-          nav("/login");
-        }
+    const data = await api.cookieLogIn(user, token);
+    if (data.result.success && data.result.realname && data.result.authCookie) {
+      localStorage.setItem("user", data.result.realname);
+      localStorage.setItem("token", data.result.authCookie.split(":")[1]);
+      if (window.location.pathname === "/login") {
+        nav("/");
       }
-    });
+    } else {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      if (window.location.pathname !== "/login") {
+        nav("/login");
+      }
+    }
+    return await Promise.resolve();
   } else if (window.location.pathname !== "/login") {
     nav("/login");
   }
+  return Promise.reject();
 };
 
 /**
@@ -116,8 +110,12 @@ const performCancelPrints = (user: string, jobIds: string[]) =>
   api.cancelPrints(user, jobIds);
 
 export {
-  apiHeartbeat, performCancelPrints, performGetAllPrinters,
+  apiHeartbeat,
+  performCancelPrints,
+  performGetAllPrinters,
   performGetRecentPrinters,
-  performListJobs, performLogIn,
-  performLogOut, performReleasePrints
+  performListJobs,
+  performLogIn,
+  performLogOut,
+  performReleasePrints,
 };

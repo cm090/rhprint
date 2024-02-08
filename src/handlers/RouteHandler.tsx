@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
+import PrinterList from "../dashboard/PrinterList";
 import ExtensionMissingError from "../errors/ExtensionMissingError";
 import PageNotFoundError from "../errors/PageNotFoundError";
 import LogIn from "../logIn/LogIn";
@@ -11,10 +12,32 @@ const RouteHandler = () => {
       path: "/",
       element: (
         <ExtensionCheck>
-          <Dashboard />
+          <Dashboard page="home">
+            <PrinterList />
+          </Dashboard>
         </ExtensionCheck>
       ),
       errorElement: <PageNotFoundError />,
+    },
+    {
+      path: "/queue",
+      element: (
+        <ExtensionCheck>
+          <Dashboard page="queue">
+            <h1>Queue</h1>
+          </Dashboard>
+        </ExtensionCheck>
+      ),
+    },
+    {
+      path: "/help",
+      element: (
+        <ExtensionCheck>
+          <Dashboard page="help">
+            <h1>How to print</h1>
+          </Dashboard>
+        </ExtensionCheck>
+      ),
     },
     {
       path: "/extension-missing",
@@ -23,9 +46,9 @@ const RouteHandler = () => {
     {
       path: "/login",
       element: (
-          <ExtensionCheck>
-            <LogIn />
-          </ExtensionCheck>
+        <ExtensionCheck>
+          <LogIn />
+        </ExtensionCheck>
       ),
     },
   ]);

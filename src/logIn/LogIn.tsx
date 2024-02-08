@@ -1,10 +1,12 @@
-import Button from "@mui/joy/Button";
-import CssBaseline from "@mui/joy/CssBaseline";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
-import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
+import {
+  Button,
+  CssBaseline,
+  FormControl,
+  FormLabel,
+  Input,
+  Sheet,
+  Typography,
+} from "@mui/joy";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";

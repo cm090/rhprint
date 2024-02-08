@@ -1,14 +1,9 @@
 import { PrintSharp } from "@mui/icons-material";
-import { Box, Stack, Typography, Button } from "@mui/joy";
+import { Box, Button, Stack, Typography } from "@mui/joy";
+import { Link } from "react-router-dom";
 import { performLogOut } from "../apiConnector/papercutApi";
 
-const Navigation = ({
-  index,
-  setIndex,
-}: {
-  index: number;
-  setIndex: (index: number) => void;
-}) => {
+const Navigation = ({ page }: { page: string }) => {
   const onLogOut = () => {
     performLogOut(localStorage.getItem("user") as string);
   };
@@ -52,10 +47,10 @@ const Navigation = ({
           <Button
             variant="plain"
             color="primary"
-            component="button"
+            component={Link}
+            to="/"
             size="sm"
-            onClick={() => setIndex(0)}
-            aria-pressed={index === 0}
+            aria-pressed={page === "home"}
             sx={{ alignSelf: "center" }}
           >
             Home
@@ -63,10 +58,10 @@ const Navigation = ({
           <Button
             variant="plain"
             color="primary"
-            component="button"
+            component={Link}
+            to="/queue"
             size="sm"
-            onClick={() => setIndex(1)}
-            aria-pressed={index === 1}
+            aria-pressed={page === "queue"}
             sx={{ alignSelf: "center" }}
           >
             Queue
@@ -74,10 +69,10 @@ const Navigation = ({
           <Button
             variant="plain"
             color="primary"
-            component="button"
+            component={Link}
+            to="/help"
             size="sm"
-            onClick={() => setIndex(2)}
-            aria-pressed={index === 2}
+            aria-pressed={page === "help"}
             sx={{ alignSelf: "center" }}
           >
             How to print
@@ -91,6 +86,9 @@ const Navigation = ({
             alignItems: "center",
           }}
         >
+          <Typography level="body-sm">
+            Hi, {localStorage.getItem("user")}!
+          </Typography>
           <Button
             variant="plain"
             color="primary"
@@ -105,64 +103,6 @@ const Navigation = ({
       </Box>
     </Box>
   );
-
-  // return (
-  //   <div className="Navigation">
-  //     <Typography level="h1">RHprint</Typography>
-  //     <Box sx={{ py: 2, pr: 2 }}>
-  //       <List
-  //         aria-label="Sidebar"
-  //         sx={{
-  //           "--ListItem-paddingLeft": "0px",
-  //           "--ListItemDecorator-size": "64px",
-  //           "--ListItem-minHeight": "32px",
-  //           "--List-nestedInsetStart": "13px",
-  //           [`& .${listItemDecoratorClasses.root}`]: {
-  //             justifyContent: "flex-end",
-  //             pr: "18px",
-  //           },
-  //         }}
-  //       >
-  //         <ListItem>
-  //           <ListItemButton
-  //             selected={index === 0}
-  //             color={index === 0 ? "primary" : undefined}
-  //             onClick={() => setIndex(0)}
-  //           >
-  //             <ListItemContent>Home</ListItemContent>
-  //           </ListItemButton>
-  //         </ListItem>
-  //         <ListItem>
-  //           <ListItemButton
-  //             selected={index === 1}
-  //             color={index === 1 ? "primary" : undefined}
-  //             onClick={() => setIndex(1)}
-  //           >
-  //             <ListItemContent>Printing Queue</ListItemContent>
-  //           </ListItemButton>
-  //         </ListItem>
-  //         <ListItem>
-  //           <ListItemButton
-  //             selected={index === 2}
-  //             color={index === 2 ? "primary" : undefined}
-  //             onClick={() => setIndex(2)}
-  //           >
-  //             <ListItemContent>How to Print</ListItemContent>
-  //           </ListItemButton>
-  //         </ListItem>
-  //         <ListItem>
-  //           <ListItemButton
-  //             selected={index === 4}
-  //             color={index === 4 ? "primary" : undefined}
-  //             onClick={() => onLogOut()}
-  //           >
-  //             <ListItemContent>Log Out</ListItemContent>
-  //           </ListItemButton>
-  //         </ListItem>
-  //       </List>
-  //     </Box>
-  //   </div>
-  // );
 };
 
 export default Navigation;

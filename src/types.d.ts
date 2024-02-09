@@ -28,10 +28,12 @@ type ApiResult = {
 type PrinterDetails = {
   printerName: string;
   serverName: string;
+  location: string;
 };
 
 type PrintDocument = {
   id: string;
+  printerName: string;
   documentName: string;
   totalPages: number;
   copies: number;

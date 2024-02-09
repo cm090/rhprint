@@ -1,37 +1,45 @@
-import { Box, CircularProgress } from "@mui/joy";
+import { Box, CircularProgress, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
 import { performListJobs } from "../../apiConnector/papercutApi";
+import QueueItem from "./QueueItem";
 
-const PrinterDetails = ({ printerName }: { printerName: string }) => {
+const PrinterDetails = ({ printer }: { printer: PrinterDetails }) => {
   const [isReady, setIsReady] = useState(false);
   const [queue, setQueue] = useState<PrintDocument[]>([]);
   const user = localStorage.getItem("user") as string;
 
   useEffect(() => {
-    performListJobs(user, printerName).then((data: ApiResult) => {
-      setQueue(data.result as PrintDocument[]);
-      setIsReady(true);
-    });
-  }, [user, printerName]);
+    setIsReady(false);
+    performListJobs(user, `${printer.serverName}\\${printer.printerName}`).then(
+      (data: ApiResult) => {
+        setQueue(data.result as PrintDocument[]);
+        setIsReady(true);
+      }
+    );
+  }, [user, printer]);
 
   return (
     <Box sx={{ p: 2 }}>
       {isReady ? (
         <Box>
-          {printerName}
-          {!!queue.length &&
+          <Box sx={{ m: 2 }}>
+            <Typography level="h3">{printer.printerName}</Typography>
+            {printer.location && (
+              <Typography level="body-sm">{printer.location}</Typography>
+            )}
+          </Box>
+          {!!queue.length ? (
             queue.map((job: PrintDocument) => (
-              <Box key={job.id} sx={{ p: 2 }}>
-                {job.documentName} <br />
-                {job.totalPages} pages <br />
-                {job.copies} copies <br />
-                {job.paperSizeFormatted} <br />
-                {job.usageTimeFormatted} <br />
-              </Box>
-            ))}
+              <QueueItem key={job.id} data={job} />
+            ))
+          ) : (
+            <Typography level="body-md" sx={{ ml: 2 }}>
+              No jobs
+            </Typography>
+          )}
         </Box>
       ) : (
-        <Box className="flex-center" sx={{ width: "100%" }}>
+        <Box className="flex-center">
           <div>
             <CircularProgress />
           </div>

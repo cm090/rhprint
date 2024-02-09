@@ -7,15 +7,10 @@ const Printer = ({
 }: {
   details: PrinterDetails;
   selected: boolean;
-  setSelected: (printerName: string) => void;
+  setSelected: (printer: PrinterDetails) => void;
 }) => {
   return (
-    <ListItemButton
-      selected={selected}
-      onClick={() =>
-        setSelected(`${details.serverName}\\${details.printerName}`)
-      }
-    >
+    <ListItemButton selected={selected} onClick={() => setSelected(details)}>
       <ListItemContent>{details.printerName}</ListItemContent>
     </ListItemButton>
   );

@@ -18,8 +18,8 @@ const PrinterList = ({
   selected,
   setSelected,
 }: {
-  selected: string;
-  setSelected: (printerName: string) => void;
+  selected: PrinterDetails;
+  setSelected: (printer: PrinterDetails) => void;
 }) => {
   const [recentPrinters, setRecentPrinters] = useState<PrinterDetails[]>([]);
   const [popularPrinters, setPopularPrinters] = useState<PrinterDetails[]>([]);
@@ -36,9 +36,7 @@ const PrinterList = ({
         if (e.result.recentPrinters) {
           setRecentPrinters(e.result.recentPrinters);
           const firstPrinter = e.result.recentPrinters[0];
-          setSelected(
-            `${firstPrinter.serverName}\\${firstPrinter.printerName}`
-          );
+          setSelected(firstPrinter);
         }
         if (e.result.popularPrinters) {
           setPopularPrinters(e.result.popularPrinters);
@@ -102,10 +100,7 @@ const PrinterList = ({
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`recent-${printer.printerName}`}
-                    selected={
-                      selected ===
-                      `${printer.serverName}\\${printer.printerName}`
-                    }
+                    selected={selected.printerName === printer.printerName}
                     setSelected={setSelected}
                   />
                 ))}
@@ -118,10 +113,7 @@ const PrinterList = ({
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`popular-${printer.printerName}`}
-                    selected={
-                      selected ===
-                      `${printer.serverName}\\${printer.printerName}`
-                    }
+                    selected={selected.printerName === printer.printerName}
                     setSelected={setSelected}
                   />
                 ))}
@@ -132,10 +124,7 @@ const PrinterList = ({
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`all-${printer.printerName}`}
-                    selected={
-                      selected ===
-                      `${printer.serverName}\\${printer.printerName}`
-                    }
+                    selected={selected.printerName === printer.printerName}
                     setSelected={setSelected}
                   />
                 ))}
@@ -150,10 +139,7 @@ const PrinterList = ({
                   <Printer
                     details={printer as unknown as PrinterDetails}
                     key={`all-${printer.printerName}`}
-                    selected={
-                      selected ===
-                      `${printer.serverName}\\${printer.printerName}`
-                    }
+                    selected={selected.printerName === printer.printerName}
                     setSelected={setSelected}
                   />
                 ))}

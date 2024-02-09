@@ -8,7 +8,7 @@ const PageNotFoundError = () => {
   return (
     <>
       <Helmet>
-        <title>Not Found | RHprint</title>
+        <title>Error | RHprint</title>
       </Helmet>
       <div className="pos-middle flex-center">
         <Card
@@ -24,7 +24,7 @@ const PageNotFoundError = () => {
           }}
         >
           <Typography level="title-lg" sx={{ textAlign: "center" }}>
-            404
+            There was an error
           </Typography>
           <Typography level="body-sm" sx={{ textAlign: "center" }}>
             {error.statusText || error.message}

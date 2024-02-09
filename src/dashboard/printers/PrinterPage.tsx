@@ -5,21 +5,22 @@ import PrinterList from "./PrinterList";
 import { Box } from "@mui/joy";
 
 const PrinterInfo = () => {
-  const [selectedPrinter, setSelectedPrinter] = useState<string>("");
+  const [selectedPrinter, setSelectedPrinter] = useState<PrinterDetails>(
+    {} as PrinterDetails
+  );
 
   return (
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns:
-          "280px 1fr",
+        gridTemplateColumns: "280px 1fr",
       }}
     >
       <PrinterList
         selected={selectedPrinter}
         setSelected={setSelectedPrinter}
       />
-      <PrinterDetails printerName={selectedPrinter} />
+      <PrinterDetails printer={selectedPrinter} />
     </Box>
   );
 };

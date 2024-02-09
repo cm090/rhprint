@@ -5,7 +5,7 @@ const ExtensionMissingError = () => {
   return (
     <>
       <Helmet>
-        <title>Extension Missing | RHprint</title>
+        <title>Extension missing | RHprint</title>
       </Helmet>
       <div className="pos-middle flex-center">
         <Card

@@ -1,4 +1,4 @@
-import { PrintSharp } from "@mui/icons-material";
+import { PrintRounded } from "@mui/icons-material";
 import { Box, Button, Stack, Typography } from "@mui/joy";
 import { Link } from "react-router-dom";
 import { performLogOut } from "../apiConnector/papercutApi";
@@ -40,7 +40,7 @@ const Navigation = ({ page }: { page: string }) => {
           spacing={1}
           sx={{ display: "flex" }}
         >
-          <PrintSharp />
+          <PrintRounded />
           <Typography level="h3" sx={{ ml: 1, pr: 3 }}>
             RHprint
           </Typography>
@@ -90,7 +90,7 @@ const Navigation = ({ page }: { page: string }) => {
             Hi, {localStorage.getItem("user")}!
           </Typography>
           <Button
-            variant="plain"
+            variant="soft"
             color="primary"
             component="button"
             size="sm"

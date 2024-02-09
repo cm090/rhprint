@@ -56,6 +56,7 @@ const PrinterList = ({
 
   return (
     <Box
+      className="printerList"
       sx={{
         p: 2,
         bgcolor: "background.surface",

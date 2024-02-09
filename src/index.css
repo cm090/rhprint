@@ -22,3 +22,14 @@ code {
   align-items: center;
   height: 100%;
 }
+
+.printerList {
+  scrollbar-color: var(
+      --variant-plainColor,
+      var(
+        --joy-palette-neutral-plainColor,
+        var(--joy-palette-neutral-700, #32383e)
+      )
+    )
+    var(--joy-palette-background-surface);
+}

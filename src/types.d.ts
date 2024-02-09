@@ -29,3 +29,12 @@ type PrinterDetails = {
   printerName: string;
   serverName: string;
 };
+
+type PrintDocument = {
+  id: string;
+  documentName: string;
+  totalPages: number;
+  copies: number;
+  paperSizeFormatted: string;
+  usageTimeFormatted: string;
+};

@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "../dashboard/Dashboard";
-import PrinterList from "../dashboard/printers/PrinterInfo";
+import PrinterInfo from "../dashboard/printers/PrinterInfo";
 import ExtensionMissingError from "../errors/ExtensionMissingError";
 import PageNotFoundError from "../errors/PageNotFoundError";
 import LogIn from "../logIn/LogIn";
@@ -13,7 +13,7 @@ const RouteHandler = () => {
       element: (
         <ExtensionCheck>
           <Dashboard page="home">
-            <PrinterList />
+            <PrinterInfo />
           </Dashboard>
         </ExtensionCheck>
       ),

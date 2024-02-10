@@ -1,50 +1,30 @@
-import { Box, CircularProgress, Typography } from "@mui/joy";
-import { useEffect, useState } from "react";
-import { performListJobs } from "../../apiConnector/papercutApi";
-import QueueItem from "./QueueItem";
+import { Box, Button, Typography } from "@mui/joy";
+import maps from "../../img/maps";
 
 const PrinterDetails = ({ printer }: { printer: PrinterDetails }) => {
-  const [isReady, setIsReady] = useState(false);
-  const [queue, setQueue] = useState<PrintDocument[]>([]);
-  const user = localStorage.getItem("user") as string;
-
-  useEffect(() => {
-    setIsReady(false);
-    performListJobs(user, `${printer.serverName}\\${printer.printerName}`).then(
-      (data: ApiResult) => {
-        setQueue(data.result as PrintDocument[]);
-        setIsReady(true);
-      }
-    );
-  }, [user, printer]);
+  let printerMap;
+  try {
+    printerMap =
+      maps[
+        printer.printerName
+          .replace(" ", "")
+          .replace("-", "") as keyof typeof maps
+      ];
+  } catch (e) {}
 
   return (
-    <Box sx={{ p: 2 }}>
-      {isReady ? (
-        <Box>
-          <Box sx={{ m: 2 }}>
-            <Typography level="h3">{printer.printerName}</Typography>
-            {printer.location && (
-              <Typography level="body-sm">{printer.location}</Typography>
-            )}
-          </Box>
-          {!!queue.length ? (
-            queue.map((job: PrintDocument) => (
-              <QueueItem key={job.id} data={job} />
-            ))
-          ) : (
-            <Typography level="body-md" sx={{ ml: 2 }}>
-              No jobs
-            </Typography>
-          )}
-        </Box>
-      ) : (
-        <Box className="flex-center">
-          <div>
-            <CircularProgress />
-          </div>
-        </Box>
+    <Box
+      sx={{ m: 2, p: 2, maxHeight: "calc(100vh - 64px)", overflowY: "auto" }}
+    >
+      <Typography level="h3">{printer.printerName}</Typography>
+      {printer.location && (
+        <Typography level="body-sm">{printer.location}</Typography>
       )}
+      {printerMap && (
+        <img src={printerMap} alt={printer.printerName} width="70%" />
+      )}
+      <br />
+      <Button color="primary">Open queue</Button>
     </Box>
   );
 };

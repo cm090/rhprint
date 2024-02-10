@@ -1,3 +1,5 @@
+declare module '*.png';
+
 type PapercutApi = {
   logIn: (username: string, password: string) => Promise<ApiResult>;
   cookieLogIn: (username: string, authCookie: string) => Promise<ApiResult>;

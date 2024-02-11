@@ -1,9 +1,5 @@
-import * as React from "react";
 import Box from "@mui/joy/Box";
-// import Link from "@mui/joy/Link";
 import Typography from "@mui/joy/Typography";
-// import Launch from "@mui/icons-material/Launch";
-// import LinkIcon from "@mui/icons-material/Link";
 
 export default function LinkAndTypography() {
   return (

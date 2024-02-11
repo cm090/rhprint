@@ -5,9 +5,9 @@ import ListItem from '@mui/joy/ListItem';
 import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
 import IconButton from '@mui/joy/IconButton';
 import Typography from '@mui/joy/Typography';
-import ReceiptLong from '@mui/icons-material/ReceiptLong';
+// import ReceiptLong from '@mui/icons-material/ReceiptLong';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-import Link from '@mui/joy/Link';
+// import Link from '@mui/joy/Link';
 
 export default function ExampleCollapsibleList() {
   const scroll = (id: string) => {

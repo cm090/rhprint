@@ -1,46 +1,21 @@
-# Getting Started with Create React App
+# RHprint
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern user interface for releasing prints on Rose-Hulman's campus
 
-## Available Scripts
+## Requirements
+- Credentials for the print server
+- Chromium or Firefox-based browser
+- [RHITweaks extension](https://github.com/cm090/rhitweaks)
+  - **Why?** The APIs used to communicate with printers are protected by CORS policies. To circumvent this, we use the extension as an intermediate data processor. API requests are sent to extension storage through event handlers, and results are sent back with promises.
 
-In the project directory, you can run:
+## How to use
+Visit [print.rhit.cf](https://print.rhit.cf) and sign in with your Rose-Hulman credentials. On the website you can view available printers, release prints, and learn how to use the system.
 
-### `npm start`
+### Why can't I used this on my phone?
+RHprint is not mobile-optimized because a browser extension is required to use the service.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### I installed RHITweaks and the website still says the extension's missing. What happened?
+Make sure RHITweaks is active (you can see its icon in your list of extensions) and click "Return to homepage." If that doesn't work, report an [issue](https://github.com/cm090/rhprint/issues).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Data privacy
+Neither RHprint or RHITweaks will collect your personal information. Login credentials are stored locally on your device and will be automatically deleted after the request is complete. After successfully logging in, your username is save to your browser along with an authentication token. This information is used to restart your session at a later time without a password. If you log into RHprint or the original print release system on another device, your authentication token will expire and you will be asked to reauthenticate. Both RHprint and RHITweaks are open-source, so you can review and confirm our source code.

@@ -13,21 +13,30 @@ import {
   performGetRecentPrinters,
 } from "../../apiConnector/papercutApi";
 import Printer from "./Printer";
+import { useNavigate } from "react-router-dom";
 
 const PrinterList = ({
   selected,
   setSelected,
+  ready,
+  setReady,
 }: {
   selected: PrinterDetails;
   setSelected: (printer: PrinterDetails) => void;
+  ready: boolean;
+  setReady: (ready: boolean) => void;
 }) => {
   const [recentPrinters, setRecentPrinters] = useState<PrinterDetails[]>([]);
   const [popularPrinters, setPopularPrinters] = useState<PrinterDetails[]>([]);
   const [allPrinters, setAllPrinters] = useState<PrinterDetails[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const user = localStorage.getItem("user") as string;
+  const nav = useNavigate();
 
   useEffect(() => {
+    if (ready) {
+      return;
+    }
     performGetRecentPrinters(user)
       .then((e: ApiResult) => {
         if (e.result.error) {
@@ -48,13 +57,20 @@ const PrinterList = ({
           return Promise.reject(e.result.error);
         }
         setAllPrinters(e.result as unknown as PrinterDetails[]);
+        setReady(true);
       })
-      .catch((err: string) => console.log(err));
-  }, [user, setSelected]);
+      .catch((err: string) => {
+        if (err === "Forbidden") {
+          localStorage.removeItem("user");
+          localStorage.removeItem("token");
+          nav("/login");
+        }
+      });
+  }, [user, setSelected, ready, setReady, nav]);
 
   return (
     <Box
-      className="printerList"
+      className="sidebar"
       sx={{
         p: 2,
         bgcolor: "background.surface",
@@ -64,9 +80,7 @@ const PrinterList = ({
         overflowY: "scroll",
       }}
     >
-      {!recentPrinters.length ||
-      !popularPrinters.length ||
-      !allPrinters.length ? (
+      {!ready ? (
         <div className="flex-center">
           <CircularProgress size="lg" />
         </div>
@@ -84,13 +98,7 @@ const PrinterList = ({
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
             startDecorator={<SearchRounded />}
-            sx={{
-              alignSelf: "center",
-              display: {
-                xs: "none",
-                sm: "flex",
-              },
-            }}
+            sx={{ alignSelf: "center" }}
           />
           {searchTerm === "" ? (
             <>

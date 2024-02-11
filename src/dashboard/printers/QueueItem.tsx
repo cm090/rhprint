@@ -1,11 +1,24 @@
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/joy";
-import { performCancelPrints } from "../../apiConnector/papercutApi";
+import {
+  performCancelPrints,
+  performReleasePrints,
+} from "../../apiConnector/papercutApi";
+import { useState } from "react";
 
-const QueueItem = ({ data }: { data: PrintDocument }) => {
+const QueueItem = ({
+  data,
+  printer,
+  refresh,
+}: {
+  data: PrintDocument;
+  printer: PrinterDetails;
+  refresh: () => void;
+}) => {
+  const [action, setAction] = useState<"print" | "cancel" | "">("");
   const user = localStorage.getItem("user") as string;
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" sx={{ mt: 2 }}>
       <CardContent>
         <Typography level="title-lg">{data.documentName}</Typography>
         <Typography>
@@ -20,19 +33,43 @@ const QueueItem = ({ data }: { data: PrintDocument }) => {
         <Typography>Sent at {data.usageTimeFormatted}</Typography>
       </CardContent>
       <CardActions buttonFlex="0 1 120px">
-        <Button variant="solid" color="primary">
+        <Button
+          variant="solid"
+          color="primary"
+          disabled={action !== ""}
+          loading={action === "print"}
+          onClick={() => {
+            setAction("print");
+            performReleasePrints(
+              user,
+              `${printer.serverName}\\${printer.printerName}`,
+              [data.id]
+            ).then((res) => {
+              if (res.result.success) {
+                setTimeout(() => {
+                  refresh();
+                }, 800);
+              }
+            });
+          }}
+        >
           Print
         </Button>
         <Button
           variant="outlined"
           color="neutral"
-          onClick={() =>
+          disabled={action !== ""}
+          loading={action === "cancel"}
+          onClick={() => {
+            setAction("cancel");
             performCancelPrints(user, [data.id]).then((res) => {
               if (res.result.success) {
-                window.location.reload();
+                setTimeout(() => {
+                  refresh();
+                }, 800);
               }
-            })
-          }
+            });
+          }}
         >
           Cancel
         </Button>

@@ -23,7 +23,7 @@ code {
   height: 100%;
 }
 
-.printerList {
+.sidebar {
   scrollbar-color: var(
       --variant-plainColor,
       var(
@@ -32,4 +32,27 @@ code {
       )
     )
     var(--joy-palette-background-surface);
+}
+
+:not(.sidebar) {
+  scrollbar-color: var(
+      --variant-plainColor,
+      var(
+        --joy-palette-neutral-plainColor,
+        var(--joy-palette-neutral-700, #32383e)
+      )
+    )
+    var(--joy-palette-background-body);
+}
+
+.map-image {
+  border-radius: 0.5rem;
+}
+
+.help-link {
+  color: var(--joy-palette-text-color);
+}
+
+.help-link:hover {
+  color: var(--joy-palette-primary-400);
 }

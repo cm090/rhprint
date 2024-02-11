@@ -59,17 +59,6 @@ const Navigation = ({ page }: { page: string }) => {
             variant="plain"
             color="primary"
             component={Link}
-            to="/queue"
-            size="sm"
-            aria-pressed={page === "queue"}
-            sx={{ alignSelf: "center" }}
-          >
-            Queue
-          </Button>
-          <Button
-            variant="plain"
-            color="primary"
-            component={Link}
             to="/help"
             size="sm"
             aria-pressed={page === "help"}

@@ -5,6 +5,7 @@ import ExtensionMissingError from "../errors/ExtensionMissingError";
 import PageNotFoundError from "../errors/PageNotFoundError";
 import LogIn from "../logIn/LogIn";
 import ExtensionCheck from "./ExtensionCheck";
+import Help from "../dashboard/help/HelpPage";
 
 const RouteHandler = () => {
   const router = createBrowserRouter([
@@ -20,21 +21,11 @@ const RouteHandler = () => {
       errorElement: <PageNotFoundError />,
     },
     {
-      path: "/queue",
-      element: (
-        <ExtensionCheck>
-          <Dashboard page="queue">
-            <h1>Queue</h1>
-          </Dashboard>
-        </ExtensionCheck>
-      ),
-    },
-    {
       path: "/help",
       element: (
         <ExtensionCheck>
           <Dashboard page="help">
-            <h1>How to print</h1>
+            <Help />
           </Dashboard>
         </ExtensionCheck>
       ),

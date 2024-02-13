@@ -12,7 +12,7 @@ const QueueItem = ({
 }: {
   data: PrintDocument;
   printer: PrinterDetails;
-  refresh: () => void;
+  refresh: (id?: string) => void;
 }) => {
   const [action, setAction] = useState<"print" | "cancel" | "">("");
   const user = localStorage.getItem("user") as string;
@@ -47,8 +47,8 @@ const QueueItem = ({
             ).then((res) => {
               if (res.result.success) {
                 setTimeout(() => {
-                  refresh();
-                }, 800);
+                  refresh(data.id);
+                }, 1000);
               }
             });
           }}
@@ -65,8 +65,8 @@ const QueueItem = ({
             performCancelPrints(user, [data.id]).then((res) => {
               if (res.result.success) {
                 setTimeout(() => {
-                  refresh();
-                }, 800);
+                  refresh(data.id);
+                }, 1000);
               }
             });
           }}

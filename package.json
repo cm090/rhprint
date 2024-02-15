@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@mui/icons-material": "^5.15.9",
     "@mui/joy": "^5.0.0-beta.24",
     "@mui/material": "^5.15.10",

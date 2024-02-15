@@ -11,21 +11,33 @@ const PrinterInfo = () => {
     {} as PrinterDetails
   );
   const [jobs, setJobs] = useState<PrintDocument[]>([]);
-  const [hasJobs, setHasJobs] = useState(false);
+  const [hasJobs, setHasJobs] = useState<boolean>(false);
+  const [removed, setRemoved] = useState<string>("");
   const user = localStorage.getItem("user") as string;
 
   useEffect(() => {
     if (hasJobs) {
       return;
     }
-    performListJobs(
-      user,
-      `${selectedPrinter.serverName}\\${selectedPrinter.printerName}`
-    ).then((data: ApiResult) => {
-      setJobs(data.result as PrintDocument[]);
-      setHasJobs(true);
-    });
-  }, [selectedPrinter, user, hasJobs]);
+    const createList = () => {
+      performListJobs(
+        user,
+        `${selectedPrinter.serverName}\\${selectedPrinter.printerName}`
+      ).then((data: ApiResult) => {
+        const res = data.result as PrintDocument[];
+        if (removed !== "") {
+          if (res.some((item: PrintDocument) => item.id === removed)) {
+            setTimeout(createList, 500);
+            return;
+          }
+        }
+        setJobs(res);
+        setRemoved("");
+        setHasJobs(true);
+      });
+    };
+    createList();
+  }, [selectedPrinter, user, hasJobs, removed]);
 
   return (
     <Box
@@ -43,7 +55,12 @@ const PrinterInfo = () => {
       <PrinterDetails
         printer={selectedPrinter}
         jobs={jobs}
-        refresh={() => setHasJobs(false)}
+        refresh={(id?: string) => {
+          if (id) {
+            setRemoved(id);
+          }
+          setHasJobs(false);
+        }}
         ready={ready}
       />
     </Box>

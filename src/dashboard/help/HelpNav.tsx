@@ -1,27 +1,22 @@
-import * as React from 'react';
-import Box from '@mui/joy/Box';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
-import IconButton from '@mui/joy/IconButton';
-import Typography from '@mui/joy/Typography';
-// import ReceiptLong from '@mui/icons-material/ReceiptLong';
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
-// import Link from '@mui/joy/Link';
+import { Box, List, ListItem, ListItemButton } from "@mui/joy";
+import { useState } from "react";
+import NavItem from "./NavItem";
+import NavHeader from "./NavHeader";
 
 export default function ExampleCollapsibleList() {
+  const [openNestedList, setOpenNestedList] = useState([false, false, false]);
+  const open = (index: number) =>
+    setOpenNestedList(openNestedList.map((open, i) => i === index && !open));
   const scroll = (id: string) => {
-    const section = document.querySelector( id );
-    section?.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+    const section = document.querySelector(id);
+    section?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [open2, setOpen2] = React.useState(false);
   return (
     <Box
-    className="sidebar"
+      className="sidebar"
       sx={{
-        pl: '24px',
+        pl: "24px",
         p: 2,
         bgcolor: "background.surface",
         borderRight: "1px solid",
@@ -30,157 +25,45 @@ export default function ExampleCollapsibleList() {
         overflowY: "auto",
       }}
     >
-      <List
-        size="sm"
-        sx={(theme) => ({
-          // Gatsby colors
-        //   '--joy-palette-primary-plainColor': '#8a4baf',
-        //   '--joy-palette-neutral-plainHoverBg': 'transparent',
-        //   '--joy-palette-neutral-plainActiveBg': 'transparent',
-        //   '--joy-palette-primary-plainHoverBg': 'transparent',
-        //   '--joy-palette-primary-plainActiveBg': 'transparent',
-        //   [theme.getColorSchemeSelector('dark')]: {
-        //     '--joy-palette-text-secondary': '#635e69',
-        //     '--joy-palette-primary-plainColor': '#d48cff',
-        //   },
-
-          '--List-insetStart': '32px',
-          '--ListItem-paddingY': '0px',
-          '--ListItem-paddingRight': '16px',
-          '--ListItem-paddingLeft': '21px',
-          '--ListItem-startActionWidth': '0px',
-          '--ListItem-startActionTranslateX': '-50%',
-
-          [`& .${listItemButtonClasses.root}`]: {
-            borderLeftColor: 'divider',
-          },
-          [`& .${listItemButtonClasses.root}.${listItemButtonClasses.selected}`]: {
-            borderLeftColor: 'currentColor',
-          },
-          '& [class*="startAction"]': {
-            color: 'var(--joy-palette-text-tertiary)',
-          },
-        })}
-      >
-        {/* <ListItem nested>
-          <ListItem component="div" startAction={<ReceiptLong />}>
-            <Typography level="body-xs" sx={{ textTransform: 'uppercase' }}>
-              Documentation
-            </Typography>
-          </ListItem>
-          <List sx={{ '--List-gap': '0px' }}>
-            <ListItem>
-              <ListItemButton selected>Overview</ListItemButton>
-            </ListItem>
-          </List>
-        </ListItem> */}
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Requirements</ListItemButton>
+      <List size="sm" sx={{ "--ListItem-radius": "var(--joy-radius-sm)" }}>
+        <ListItem sx={{ "--List-gap": "0px" }}>
+          <ListItemButton
+            onClick={() => {
+              scroll("#requirements");
+            }}
+          >
+            Requirements
+          </ListItemButton>
         </ListItem>
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Connecting to Printers</ListItemButton>
-        </ListItem>
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Printing</ListItemButton>
-        </ListItem>
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Using RHPrint</ListItemButton>
-        </ListItem>
-        <ListItem
-          nested
-          sx={{ my: 1 }}
-          startAction={
-            <IconButton
-              variant="plain"
-              size="sm"
-              color="neutral"
-              onClick={() => setOpen(!open)}
-            >
-              <KeyboardArrowDown
-                sx={{ transform: open ? 'initial' : 'rotate(-90deg)' }}
-              />
-            </IconButton>
-          }
+        <NavHeader
+          label="Connecting To Printers"
+          open={openNestedList[0]}
+          setOpen={() => open(0)}
         >
-          <ListItem>
-            <Typography
-              level="inherit"
-              sx={{
-                fontWeight: open ? 'bold' : undefined,
-                color: open ? 'text.primary' : 'inherit',
-              }}
-            >
-              Tutorial
-            </Typography>
-          </ListItem>
-          {open && (
-            <List sx={{ '--ListItem-paddingY': '8px' }}>
-              <ListItem>
-                <ListItemButton>Overview</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>
-                  0. Set Up Your Development Environment
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>
-                  1. Create and Deploy Your First Gatsby Site
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>2. Use and Style React components</ListItemButton>
-              </ListItem>
-            </List>
-          )}
-        </ListItem>
-        <ListItem
-          nested
-          sx={{ my: 1 }}
-          startAction={
-            <IconButton
-              variant="plain"
-              size="sm"
-              color="neutral"
-              onClick={() => setOpen2((bool) => !bool)}
-            >
-              <KeyboardArrowDown
-                sx={{ transform: open2 ? 'initial' : 'rotate(-90deg)' }}
-              />
-            </IconButton>
-          }
+          <NavItem label="Print Queues" />
+          <NavItem label="Connecting on RHIT Laptops" />
+          <NavItem label="Connecting on Ubuntu (Linux)" />
+          <NavItem label="Connecting on Mac" />
+          <NavItem label="Connecting on Other Devices" />
+        </NavHeader>
+        <NavHeader
+          label="Printing"
+          open={openNestedList[1]}
+          setOpen={() => open(1)}
         >
-          <ListItem>
-            <Typography
-              level="inherit"
-              sx={{
-                fontWeight: open2 ? 'bold' : undefined,
-                color: open2 ? 'text.primary' : 'inherit',
-              }}
-            >
-              How-to Guides
-            </Typography>
-            <Typography component="span" level="body-xs">
-              39
-            </Typography>
-          </ListItem>
-          {open2 && (
-            <List sx={{ '--ListItem-paddingY': '8px' }}>
-              <ListItem>
-                <ListItemButton>Overview</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>Local Development</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>Routing</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton>Styling</ListItemButton>
-              </ListItem>
-            </List>
-          )}
-        </ListItem>
+          <NavItem label="Printing on RHIT Laptops" />
+          <NavItem label="Printing on Ubuntu (Linux)" />
+          <NavItem label="Printing on Mac" />
+        </NavHeader>
+        <NavHeader
+          label="Using RHprint"
+          open={openNestedList[2]}
+          setOpen={() => open(2)}
+        >
+          <NavItem label="Selecting a Printer" />
+          <NavItem label="Releasing a Print Job" />
+          <NavItem label="Canceling a Print Job" />
+        </NavHeader>
       </List>
     </Box>
   );

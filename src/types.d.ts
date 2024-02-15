@@ -42,3 +42,9 @@ type PrintDocument = {
   paperSizeFormatted: string;
   usageTimeFormatted: string;
 };
+
+type HelpImage = {
+  id: string;
+  imageName: string;
+  imageDesc: string;
+};

@@ -1,26 +1,22 @@
-import * as React from 'react';
-import Box from '@mui/joy/Box';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
-import IconButton from '@mui/joy/IconButton';
-import Typography from '@mui/joy/Typography';
-import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
+import { Box, List, ListItem, ListItemButton } from "@mui/joy";
+import { useState } from "react";
+import NavItem from "./NavItem";
+import NavHeader from "./NavHeader";
 
 export default function ExampleCollapsibleList() {
+  const [openNestedList, setOpenNestedList] = useState([false, false, false]);
+  const open = (index: number) =>
+    setOpenNestedList(openNestedList.map((open, i) => i === index && !open));
   const scroll = (id: string) => {
-    const section = document.querySelector( id );
-    section?.scrollIntoView( { behavior: 'smooth', block: 'start' } );
+    const section = document.querySelector(id);
+    section?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const [open, setOpen] = React.useState(false);
-  const [open2, setOpen2] = React.useState(false);
-  const [open3, setOpen3] = React.useState(false);
   return (
     <Box
-    className="sidebar"
+      className="sidebar"
       sx={{
-        pl: '24px',
+        pl: "24px",
         p: 2,
         bgcolor: "background.surface",
         borderRight: "1px solid",
@@ -29,188 +25,45 @@ export default function ExampleCollapsibleList() {
         overflowY: "auto",
       }}
     >
-      <List
-        size="sm"
-        sx={(theme) => ({
-          // Gatsby colors
-        //   '--joy-palette-primary-plainColor': '#8a4baf',
-        //   '--joy-palette-neutral-plainHoverBg': 'transparent',
-        //   '--joy-palette-neutral-plainActiveBg': 'transparent',
-        //   '--joy-palette-primary-plainHoverBg': 'transparent',
-        //   '--joy-palette-primary-plainActiveBg': 'transparent',
-        //   [theme.getColorSchemeSelector('dark')]: {
-        //     '--joy-palette-text-secondary': '#635e69',
-        //     '--joy-palette-primary-plainColor': '#d48cff',
-        //   },
-
-          '--List-insetStart': '32px',
-          '--ListItem-paddingY': '0px',
-          '--ListItem-paddingRight': '16px',
-          '--ListItem-paddingLeft': '21px',
-          '--ListItem-startActionWidth': '0px',
-          '--ListItem-startActionTranslateX': '-50%',
-
-          [`& .${listItemButtonClasses.root}`]: {
-            borderLeftColor: 'divider',
-          },
-          [`& .${listItemButtonClasses.root}.${listItemButtonClasses.selected}`]: {
-            borderLeftColor: 'currentColor',
-          },
-          '& [class*="startAction"]': {
-            color: 'var(--joy-palette-text-tertiary)',
-          },
-        })}
-      >
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#requirements")}}>Requirements</ListItemButton>
+      <List size="sm" sx={{ "--ListItem-radius": "var(--joy-radius-sm)" }}>
+        <ListItem sx={{ "--List-gap": "0px" }}>
+          <ListItemButton
+            onClick={() => {
+              scroll("#requirements");
+            }}
+          >
+            Requirements
+          </ListItemButton>
         </ListItem>
-        {/* Connecting to Printers */}
-        <ListItem
-          nested
-          sx={{ my: 1 }}
-          startAction={
-            <IconButton
-              variant="plain"
-              size="sm"
-              color="neutral"
-              onClick={() => setOpen(!open)}
-            >
-              <KeyboardArrowDown
-                sx={{ transform: open ? 'initial' : 'rotate(-90deg)' }}
-              />
-            </IconButton>
-          }
+        <NavHeader
+          label="Connecting To Printers"
+          open={openNestedList[0]}
+          setOpen={() => open(0)}
         >
-          <ListItem>
-            <ListItemButton onClick={()=>{scroll("#c-to-p")}}>
-            <Typography
-              level="inherit"
-              sx={{
-                fontWeight: open ? 'bold' : undefined,
-                color: open ? 'text.primary' : 'inherit',
-              }}
-            >
-              Connecting To Printers
-            </Typography>
-            </ListItemButton>
-          </ListItem>
-          {open && (
-            <List sx={{ '--ListItem-paddingY': '8px' }}>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#p-q")}}>Print Queues</ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#c-rl")}}>
-                Connecting on RHIT laptop
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#c-ul")}}>
-                  Connecting on Ubuntu(Linux)
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#c-m")}}>Connecting on Mac</ListItemButton>
-              </ListItem>
-            </List>
-          )}
-        </ListItem>
-        {/* Printing */}
-        <ListItem
-          nested
-          sx={{ my: 1 }}
-          startAction={
-            <IconButton
-              variant="plain"
-              size="sm"
-              color="neutral"
-              onClick={() => setOpen2(!open2)}
-            >
-              <KeyboardArrowDown
-                sx={{ transform: open ? 'initial' : 'rotate(-90deg)' }}
-              />
-            </IconButton>
-          }
+          <NavItem label="Print Queues" />
+          <NavItem label="Connecting on RHIT Laptops" />
+          <NavItem label="Connecting on Ubuntu (Linux)" />
+          <NavItem label="Connecting on Mac" />
+          <NavItem label="Connecting on Other Devices" />
+        </NavHeader>
+        <NavHeader
+          label="Printing"
+          open={openNestedList[1]}
+          setOpen={() => open(1)}
         >
-          <ListItem>
-            <ListItemButton onClick={()=>{scroll("#printing")}}>
-            <Typography
-              level="inherit"
-              sx={{
-                fontWeight: open ? 'bold' : undefined,
-                color: open ? 'text.primary' : 'inherit',
-              }}
-            >
-              Printing
-            </Typography>
-            </ListItemButton>
-          </ListItem>
-          {open2 && (
-            <List sx={{ '--ListItem-paddingY': '8px' }}>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#printing-rhit")}}>
-                Printing on RHIT Laptops
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#printing-ubuntu")}}>
-                  Printing on Ubuntu(Linux)
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#printing-mac")}}>Printing on Mac</ListItemButton>
-              </ListItem>
-            </List>
-          )}
-        </ListItem>
-        {/* Using RHprint */}
-        <ListItem
-          nested
-          sx={{ my: 1 }}
-          startAction={
-            <IconButton
-              variant="plain"
-              size="sm"
-              color="neutral"
-              onClick={() => setOpen3(!open3)}
-            >
-              <KeyboardArrowDown
-                sx={{ transform: open ? 'initial' : 'rotate(-90deg)' }}
-              />
-            </IconButton>
-          }
+          <NavItem label="Printing on RHIT Laptops" />
+          <NavItem label="Printing on Ubuntu (Linux)" />
+          <NavItem label="Printing on Mac" />
+        </NavHeader>
+        <NavHeader
+          label="Using RHprint"
+          open={openNestedList[2]}
+          setOpen={() => open(2)}
         >
-          <ListItem>
-            <ListItemButton onClick={()=>{scroll("#using")}}>
-            <Typography
-              level="inherit"
-              sx={{
-                fontWeight: open ? 'bold' : undefined,
-                color: open ? 'text.primary' : 'inherit',
-              }}
-            >
-              Using RHprint
-            </Typography>
-            </ListItemButton>
-          </ListItem>
-          {open3 && (
-            <List sx={{ '--ListItem-paddingY': '8px' }}>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#selecting")}}>
-                Selecting a Printer
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#releasing")}}>
-                  Releasing a Print Job
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton onClick={()=>{scroll("#canceling")}}>Canceling a Print Job</ListItemButton>
-              </ListItem>
-            </List>
-          )}
-        </ListItem>
+          <NavItem label="Selecting a Printer" />
+          <NavItem label="Releasing a Print Job" />
+          <NavItem label="Canceling a Print Job" />
+        </NavHeader>
       </List>
     </Box>
   );

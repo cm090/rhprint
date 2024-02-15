@@ -56,3 +56,7 @@ code {
 .help-link:hover {
   color: var(--joy-palette-primary-400);
 }
+
+img.clickable {
+  cursor: pointer;
+}

@@ -104,7 +104,7 @@ const Details = ({
             ))
         ) : (
           <Typography level="body-md" sx={{ mt: 2 }}>
-            No jobs. <Link to="/help" className="help-link">Learn how to create one</Link>.
+            No jobs. <Link to="/help#printing" className="help-link">Learn how to create one</Link>.
           </Typography>
         )}{" "}
       </Box>

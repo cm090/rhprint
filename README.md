@@ -11,7 +11,7 @@ A modern user interface for releasing prints on Rose-Hulman's campus
 ## How to use
 Visit [print.rhit.cf](https://print.rhit.cf) and sign in with your Rose-Hulman credentials. On the website you can view available printers, release prints, and learn how to use the system.
 
-### Why can't I used this on my phone?
+### Why can't I use this on my phone?
 RHprint is not mobile-optimized because a browser extension is required to use the service.
 
 ### I installed RHITweaks and the website still says the extension's missing. What happened?

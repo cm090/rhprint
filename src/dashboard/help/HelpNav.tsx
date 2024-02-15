@@ -15,6 +15,7 @@ export default function ExampleCollapsibleList() {
 
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   return (
     <Box
     className="sidebar"
@@ -60,30 +61,10 @@ export default function ExampleCollapsibleList() {
           },
         })}
       >
-        {/* <ListItem nested>
-          <ListItem component="div" startAction={<ReceiptLong />}>
-            <Typography level="body-xs" sx={{ textTransform: 'uppercase' }}>
-              Documentation
-            </Typography>
-          </ListItem>
-          <List sx={{ '--List-gap': '0px' }}>
-            <ListItem>
-              <ListItemButton selected>Overview</ListItemButton>
-            </ListItem>
-          </List>
-        </ListItem> */}
         <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Requirements</ListItemButton>
+          <ListItemButton onClick={()=>{scroll("#requirements")}}>Requirements</ListItemButton>
         </ListItem>
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Connecting to Printers</ListItemButton>
-        </ListItem>
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Printing</ListItemButton>
-        </ListItem>
-        <ListItem sx={{ '--List-gap': '0px' }}>
-          <ListItemButton onClick={()=>{scroll("#heading-demo")}}>Using RHPrint</ListItemButton>
-        </ListItem>
+        {/* Connecting to Printers */}
         <ListItem
           nested
           sx={{ my: 1 }}
@@ -101,6 +82,7 @@ export default function ExampleCollapsibleList() {
           }
         >
           <ListItem>
+            <ListItemButton onClick={()=>{scroll("#c-to-p")}}>
             <Typography
               level="inherit"
               sx={{
@@ -108,30 +90,32 @@ export default function ExampleCollapsibleList() {
                 color: open ? 'text.primary' : 'inherit',
               }}
             >
-              Tutorial
+              Connecting To Printers
             </Typography>
+            </ListItemButton>
           </ListItem>
           {open && (
             <List sx={{ '--ListItem-paddingY': '8px' }}>
               <ListItem>
-                <ListItemButton>Overview</ListItemButton>
+                <ListItemButton onClick={()=>{scroll("#p-q")}}>Print Queues</ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton>
-                  0. Set Up Your Development Environment
+                <ListItemButton onClick={()=>{scroll("#c-rl")}}>
+                Connecting on RHIT laptop
                 </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton>
-                  1. Create and Deploy Your First Gatsby Site
+                <ListItemButton onClick={()=>{scroll("#c-ul")}}>
+                  Connecting on Ubuntu(Linux)
                 </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton>2. Use and Style React components</ListItemButton>
+                <ListItemButton onClick={()=>{scroll("#c-m")}}>Connecting on Mac</ListItemButton>
               </ListItem>
             </List>
           )}
         </ListItem>
+        {/* Printing */}
         <ListItem
           nested
           sx={{ my: 1 }}
@@ -140,41 +124,89 @@ export default function ExampleCollapsibleList() {
               variant="plain"
               size="sm"
               color="neutral"
-              onClick={() => setOpen2((bool) => !bool)}
+              onClick={() => setOpen2(!open2)}
             >
               <KeyboardArrowDown
-                sx={{ transform: open2 ? 'initial' : 'rotate(-90deg)' }}
+                sx={{ transform: open ? 'initial' : 'rotate(-90deg)' }}
               />
             </IconButton>
           }
         >
           <ListItem>
+            <ListItemButton onClick={()=>{scroll("#printing")}}>
             <Typography
               level="inherit"
               sx={{
-                fontWeight: open2 ? 'bold' : undefined,
-                color: open2 ? 'text.primary' : 'inherit',
+                fontWeight: open ? 'bold' : undefined,
+                color: open ? 'text.primary' : 'inherit',
               }}
             >
-              How-to Guides
+              Printing
             </Typography>
-            <Typography component="span" level="body-xs">
-              39
-            </Typography>
+            </ListItemButton>
           </ListItem>
           {open2 && (
             <List sx={{ '--ListItem-paddingY': '8px' }}>
               <ListItem>
-                <ListItemButton>Overview</ListItemButton>
+                <ListItemButton onClick={()=>{scroll("#printing-rhit")}}>
+                Printing on RHIT Laptops
+                </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton>Local Development</ListItemButton>
+                <ListItemButton onClick={()=>{scroll("#printing-ubuntu")}}>
+                  Printing on Ubuntu(Linux)
+                </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton>Routing</ListItemButton>
+                <ListItemButton onClick={()=>{scroll("#printing-mac")}}>Printing on Mac</ListItemButton>
+              </ListItem>
+            </List>
+          )}
+        </ListItem>
+        {/* Using RHprint */}
+        <ListItem
+          nested
+          sx={{ my: 1 }}
+          startAction={
+            <IconButton
+              variant="plain"
+              size="sm"
+              color="neutral"
+              onClick={() => setOpen3(!open3)}
+            >
+              <KeyboardArrowDown
+                sx={{ transform: open ? 'initial' : 'rotate(-90deg)' }}
+              />
+            </IconButton>
+          }
+        >
+          <ListItem>
+            <ListItemButton onClick={()=>{scroll("#using")}}>
+            <Typography
+              level="inherit"
+              sx={{
+                fontWeight: open ? 'bold' : undefined,
+                color: open ? 'text.primary' : 'inherit',
+              }}
+            >
+              Using RHprint
+            </Typography>
+            </ListItemButton>
+          </ListItem>
+          {open3 && (
+            <List sx={{ '--ListItem-paddingY': '8px' }}>
+              <ListItem>
+                <ListItemButton onClick={()=>{scroll("#selecting")}}>
+                Selecting a Printer
+                </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton>Styling</ListItemButton>
+                <ListItemButton onClick={()=>{scroll("#releasing")}}>
+                  Releasing a Print Job
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton onClick={()=>{scroll("#canceling")}}>Canceling a Print Job</ListItemButton>
               </ListItem>
             </List>
           )}

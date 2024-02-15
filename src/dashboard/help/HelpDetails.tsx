@@ -381,7 +381,7 @@ export default function LinkAndTypography() {
       <Typography>&nbsp;</Typography>
       <Typography>&nbsp;</Typography>
       <Typography
-        id="using"
+        id="using-rhprint"
         level="h2"
         fontSize="title-lg"
         mb={1}

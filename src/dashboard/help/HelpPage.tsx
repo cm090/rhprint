@@ -1,7 +1,7 @@
 import Box from "@mui/joy/Box";
-import HelpNav from "./HelpNav";
-import HelpDetails from "./HelpDetails";
 import { useEffect } from "react";
+import HelpDetails from "./HelpDetails";
+import HelpNav from "./HelpNav";
 
 const Help = () => {
   useEffect(() => {

@@ -6,23 +6,21 @@ const MapModal = ({
 }: {
   printerMap: string;
   setMapVisible: (mapVisible: boolean) => void;
-}) => {
-  return (
-    <Modal open={true} onClose={() => setMapVisible(false)}>
-      <ModalDialog variant="soft" layout="center" color="primary">
-        <ModalClose />
-        <Typography component="h2" level="h4" fontWeight="lg" mb={1}>
-          Printer map
-        </Typography>
-        <img
-          className="map-image"
-          src={printerMap}
-          alt="Printer map"
-          width="100%"
-        />
-      </ModalDialog>
-    </Modal>
-  );
-};
+}) => (
+  <Modal open={true} onClose={() => setMapVisible(false)}>
+    <ModalDialog variant="soft" layout="center" color="primary">
+      <ModalClose />
+      <Typography component="h2" level="h4" fontWeight="lg" mb={1}>
+        Printer map
+      </Typography>
+      <img
+        className="modal-image"
+        src={printerMap}
+        alt="Printer map"
+        width="100%"
+      />
+    </ModalDialog>
+  </Modal>
+);
 
 export default MapModal;

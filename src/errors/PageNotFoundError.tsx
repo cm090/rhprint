@@ -24,7 +24,7 @@ const PageNotFoundError = () => {
           }}
         >
           <Typography level="title-lg" sx={{ textAlign: "center" }}>
-            There was an error
+            There was an error:
           </Typography>
           <Typography level="body-sm" sx={{ textAlign: "center" }}>
             {error.statusText || error.message}
@@ -34,7 +34,7 @@ const PageNotFoundError = () => {
             size="md"
             color="primary"
             sx={{ alignSelf: "center", fontWeight: 600 }}
-            onClick={() => window.location.href = "/"}
+            onClick={() => (window.location.href = "/")}
           >
             Return to homepage
           </Button>

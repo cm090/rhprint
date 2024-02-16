@@ -1,9 +1,9 @@
 import { Button, Card, CardActions, CardContent, Typography } from "@mui/joy";
+import { useState } from "react";
 import {
   performCancelPrints,
   performReleasePrints,
 } from "../../apiConnector/papercutApi";
-import { useState } from "react";
 
 const QueueItem = ({
   data,

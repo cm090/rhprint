@@ -1,7 +1,7 @@
-import { CircularProgress } from "@mui/joy";
+import { Box, CircularProgress, Typography } from "@mui/joy";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiHeartbeat, extensionCheck } from "../apiConnector/papercutApi";
 
 const ExtensionCheck = ({ children }: { children: JSX.Element }) => {
@@ -22,11 +22,27 @@ const ExtensionCheck = ({ children }: { children: JSX.Element }) => {
       <Helmet>
         <title>Loading | RHprint</title>
       </Helmet>
-      <div className="pos-middle flex-center">
-        <CircularProgress size="lg" />
-      </div>
+      <MainLoader className="pos-middle" />
     </>
   );
 };
 
+const MainLoader = ({ className }: { className?: string }) => (
+  <div className={`flex-center ${className}`}>
+    <Box sx={{ textAlign: "center" }}>
+      <CircularProgress size="lg" />
+      <Typography level="title-lg" sx={{ mt: 2 }}>
+        Loading RHprint
+      </Typography>
+      <Typography level="title-sm" sx={{ color: "text.secondary" }}>
+        Taking too long?{" "}
+        <Link to="/" className="help-link" reloadDocument>
+          Reload
+        </Link>
+      </Typography>
+    </Box>
+  </div>
+);
+
+export { MainLoader };
 export default ExtensionCheck;

@@ -8,12 +8,12 @@ import {
   ListSubheader,
 } from "@mui/joy";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   performGetAllPrinters,
   performGetRecentPrinters,
 } from "../../apiConnector/papercutApi";
 import Printer from "./Printer";
-import { useNavigate } from "react-router-dom";
 
 const PrinterList = ({
   selected,

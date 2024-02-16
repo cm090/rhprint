@@ -1,7 +1,8 @@
 import { Map, Refresh } from "@mui/icons-material";
-import { Alert, Box, Button, CircularProgress, Typography } from "@mui/joy";
+import { Alert, Box, Button, Typography } from "@mui/joy";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { MainLoader } from "../../handlers/ExtensionCheck";
 import maps from "../../img/maps";
 import MapModal from "./MapModal";
 import QueueItem from "./QueueItem";
@@ -23,22 +24,18 @@ const PrinterDetails = ({
   jobs: PrintDocument[];
   refresh: () => void;
   ready: boolean;
-}) => {
-  return (
-    <Box sx={{ p: 3, maxHeight: "calc(100vh - 64px)", overflowY: "auto" }}>
-      {ready ? (
-        <>
-          {queues[printer.printerName] && <QueueAlert printer={printer} />}
-          <Details printer={printer} jobs={jobs} refresh={refresh} />
-        </>
-      ) : (
-        <div className="flex-center">
-          <CircularProgress size="lg" />
-        </div>
-      )}
-    </Box>
-  );
-};
+}) => (
+  <Box sx={{ p: 3, maxHeight: "calc(100vh - 64px)", overflowY: "auto" }}>
+    {ready ? (
+      <>
+        {queues[printer.printerName] && <QueueAlert printer={printer} />}
+        <Details printer={printer} jobs={jobs} refresh={refresh} />
+      </>
+    ) : (
+      <MainLoader />
+    )}
+  </Box>
+);
 
 const Details = ({
   printer,
@@ -104,7 +101,11 @@ const Details = ({
             ))
         ) : (
           <Typography level="body-md" sx={{ mt: 2 }}>
-            No jobs. <Link to="/help#printing" className="help-link">Learn how to create one</Link>.
+            No jobs.{" "}
+            <Link to="/help#printing" className="help-link">
+              Learn how to create one
+            </Link>
+            .
           </Typography>
         )}{" "}
       </Box>
@@ -112,13 +113,11 @@ const Details = ({
   );
 };
 
-const QueueAlert = ({ printer }: { printer: PrinterDetails }) => {
-  return (
-    <Alert color="warning" sx={{ mb: 2 }}>
-      This printer requires you to send jobs to a different queue. Please print
-      to {queues[printer.printerName]}.
-    </Alert>
-  );
-};
+const QueueAlert = ({ printer }: { printer: PrinterDetails }) => (
+  <Alert color="warning" sx={{ mb: 2 }}>
+    This printer requires you to send jobs to a different queue. Please print to{" "}
+    {queues[printer.printerName]}.
+  </Alert>
+);
 
 export default PrinterDetails;

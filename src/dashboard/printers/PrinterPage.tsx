@@ -1,7 +1,6 @@
 import { Box } from "@mui/joy";
 import { useEffect, useState } from "react";
 import { performListJobs } from "../../apiConnector/papercutApi";
-import "../styles.css";
 import PrinterDetails from "./PrinterDetails";
 import PrinterList from "./PrinterList";
 

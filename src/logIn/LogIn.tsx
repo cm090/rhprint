@@ -11,7 +11,6 @@ import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { performLogIn } from "../apiConnector/papercutApi";
-import "./styles.css";
 
 const LogIn = () => {
   const [username, setUsername] = useState("");

@@ -17,7 +17,12 @@ const GalleryItem = ({ item }: { item: HelpImage }) => {
             <Typography component="h2" level="h4" fontWeight="lg" mb={1}>
               {item.imageDesc}
             </Typography>
-            <img src={item.imageName} alt={item.imageDesc} width="100%" />
+            <img
+              className="modal-image"
+              src={item.imageName}
+              alt={item.imageDesc}
+              width="100%"
+            />
           </ModalDialog>
         </Modal>
       )}

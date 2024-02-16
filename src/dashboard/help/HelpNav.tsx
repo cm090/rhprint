@@ -1,9 +1,9 @@
 import { Box, List, ListItem, ListItemButton } from "@mui/joy";
 import { useState } from "react";
-import NavItem from "./NavItem";
 import NavHeader from "./NavHeader";
+import NavItem from "./NavItem";
 
-export default function ExampleCollapsibleList() {
+const ExampleCollapsibleList = () => {
   const [openNestedList, setOpenNestedList] = useState([false, false, false]);
   const open = (index: number) =>
     setOpenNestedList(openNestedList.map((open, i) => i === index && !open));
@@ -67,4 +67,6 @@ export default function ExampleCollapsibleList() {
       </List>
     </Box>
   );
-}
+};
+
+export default ExampleCollapsibleList;

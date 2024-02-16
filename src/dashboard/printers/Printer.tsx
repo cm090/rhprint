@@ -8,12 +8,10 @@ const Printer = ({
   details: PrinterDetails;
   selected: boolean;
   setSelected: (printer: PrinterDetails) => void;
-}) => {
-  return (
-    <ListItemButton selected={selected} onClick={() => setSelected(details)}>
-      <ListItemContent>{details.printerName}</ListItemContent>
-    </ListItemButton>
-  );
-};
+}) => (
+  <ListItemButton selected={selected} onClick={() => setSelected(details)}>
+    <ListItemContent>{details.printerName}</ListItemContent>
+  </ListItemButton>
+);
 
 export default Printer;

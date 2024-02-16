@@ -43,20 +43,15 @@ class ApiRequest {
 
   constructor() {
     document.addEventListener("chromeStorageCallback", this.#runCall);
-    document.dispatchEvent(
-      new CustomEvent("chromeStorageGet", { detail: { data: "request" } })
-    );
+    document.dispatchEvent(new CustomEvent("chromeStorageGet"));
   }
 
   /**
    * Checks request data to prepare API call.
    * @param request request headers
    */
-  #runCall = ({
-    detail: {
-      res: { request },
-    },
-  }) => {
+  #runCall = (req) => {
+    const request = JSON.parse(req.detail);
     try {
       if (request === null || !request.isRequest) {
         return;
@@ -70,14 +65,14 @@ class ApiRequest {
     } catch (e) {
       document.dispatchEvent(
         new CustomEvent("chromeStorageSet", {
-          detail: {
+          detail: JSON.stringify({
             data: {
               request: {
                 result: { success: false, error: e },
                 call: request.method,
               },
             },
-          },
+          }),
         })
       );
       this.#postRequestAction();
@@ -98,7 +93,9 @@ class ApiRequest {
 
     document.dispatchEvent(
       new CustomEvent("chromeStorageSet", {
-        detail: { data: { request: { result: responseData, call: "logout" } } },
+        detail: JSON.stringify({
+          data: { request: { result: responseData, call: "logout" } },
+        }),
       })
     );
     this.#postRequestAction();
@@ -139,7 +136,11 @@ class ApiRequest {
 
     fetch(apiCall.url, apiData)
       .then((res) =>
-        res.ok ? res.json() : { success: false, error: res.statusText }
+        res.ok
+          ? res.status === 204
+            ? { success: true }
+            : res.json()
+          : { success: false, error: res.statusText }
       )
       .then((res) => {
         if (res["error-msg"]) {
@@ -149,9 +150,9 @@ class ApiRequest {
         }
         document.dispatchEvent(
           new CustomEvent("chromeStorageSet", {
-            detail: {
+            detail: JSON.stringify({
               data: { request: { result: res, call: request.method } },
-            },
+            }),
           })
         );
         this.#postRequestAction();

@@ -40,8 +40,8 @@ class ApiExtension {
       "apiRequest",
       () =>
         new Promise((res) => {
-          const onDataChanged = ({ detail }) => {
-            const data = detail.changes.request.newValue;
+          const onDataChanged = (result) => {
+            const data = JSON.parse(result.detail).newValue.request;
             if (!data || data.isRequest) {
               return;
             }
@@ -51,7 +51,9 @@ class ApiExtension {
           document.addEventListener("chromeStorageRequest", onDataChanged);
           document.dispatchEvent(
             new CustomEvent("chromeStorageSet", {
-              detail: { data: { request: { method, data, isRequest: true } } },
+              detail: JSON.stringify({
+                data: { request: { method, data, isRequest: true } },
+              }),
             })
           );
         })

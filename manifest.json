@@ -3,6 +3,9 @@
     "name": "RHprint Helper",
     "description": "API integration for RHprint",
     "version": "1.0",
+    "icons": {
+        "512": "assets/logo.png"
+    },
     "permissions": [
         "storage"
     ],
@@ -13,10 +16,7 @@
             ],
             "matches": [
                 "https://print.rhit.cf/*",
-                "https://*.rhprint.pages.dev/*",
-                "http://localhost:3000/*",
-                "https://print.rose-hulman.edu:9192/*",
-                "http://print.rose-hulman.edu:9191/*"
+                "https://print.rose-hulman.edu:9192/*"
             ],
             "run_at": "document_end"
         }
@@ -31,10 +31,7 @@
             ],
             "matches": [
                 "https://print.rhit.cf/*",
-                "https://*.rhprint.pages.dev/*",
-                "http://localhost:3000/*",
-                "https://print.rose-hulman.edu:9192/*",
-                "http://print.rose-hulman.edu:9191/*"
+                "https://print.rose-hulman.edu:9192/*"
             ]
         }
     ],

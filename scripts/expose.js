@@ -8,24 +8,28 @@ const injectScript = (path) => {
 
 const main = () => {
   // Create event listeners for getting and setting Chrome storage
-  document.addEventListener("chromeStorageSet", ({ detail }) => {
-    chrome.storage.local.set(detail.data);
-  });
-  document.addEventListener("chromeStorageGet", ({ detail }) => {
-    chrome.storage.local.get(detail.data, (res) =>
+  document.addEventListener("chromeStorageSet", ({ detail }) =>
+    chrome.storage.local.set({ print: JSON.parse(detail).data })
+  );
+  document.addEventListener("chromeStorageGet", () =>
+    chrome.storage.local.get("print", (res) => {
+      const data = res.print.request;
       document.dispatchEvent(
-        new CustomEvent("chromeStorageCallback", { detail: { res } })
-      )
-    );
-  });
+        new CustomEvent("chromeStorageCallback", {
+          detail: JSON.stringify(data),
+        })
+      );
+    })
+  );
   chrome.storage.local.onChanged.addListener((changes) => {
+    const data = changes.print;
     document.dispatchEvent(
-      new CustomEvent("chromeStorageRequest", { detail: { changes } })
+      new CustomEvent("chromeStorageRequest", { detail: JSON.stringify(data) })
     );
   });
 
   // Inject scripts to appropriate pages
-  if (window.location.hostname.includes("rose-hulman.edu")) {
+  if (window.location.hostname === "print.rose-hulman.edu") {
     injectScript("scripts/papercut.js");
   } else {
     injectScript("scripts/jquery.min.js");

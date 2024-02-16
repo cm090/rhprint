@@ -1,13 +1,16 @@
 const PAPERCUT_URL = "https://print.rose-hulman.edu:9192/client";
 
 // Open Papercut on new request (in the background)
-chrome.storage.local.onChanged.addListener((changes) => {
+chrome.storage.local.onChanged.addListener((res) => {
+  const changes = res;
+  if (!changes.print) {
+    return;
+  }
   try {
-    if (changes.request.newValue.isRequest) {
+    if (changes.print.newValue.request.isRequest) {
       chrome.tabs.create({
         url: PAPERCUT_URL,
         active: false,
-        selected: false,
       });
     }
   } catch (e) {}

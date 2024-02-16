@@ -5,7 +5,7 @@ A modern user interface for releasing prints on Rose-Hulman's campus
 ## Requirements
 - Credentials for the print server
 - Chromium or Firefox-based browser
-- [RHITweaks extension](https://github.com/cm090/rhitweaks)
+- [RHITweaks extension](https://github.com/cm090/rhitweaks) or [standalone helper](https://chromewebstore.google.com/detail/nkdakhmklhghgjaggjbbpmhmgfbofhlo)
   - **Why?** The APIs used to communicate with printers are protected by CORS policies. To circumvent this, we use the extension as an intermediate data processor. API requests are sent to extension storage through event handlers, and results are sent back with promises.
 
 ## How to use

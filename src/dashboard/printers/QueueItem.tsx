@@ -45,7 +45,10 @@ const QueueItem = ({
               `${printer.serverName}\\${printer.printerName}`,
               [data.id]
             ).then((res) => {
-              if (res.result.success) {
+              if (
+                res.result.success ||
+                res.result.statusMessage === "success"
+              ) {
                 setTimeout(() => {
                   refresh(data.id);
                 }, 1000);

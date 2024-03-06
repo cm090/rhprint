@@ -22,6 +22,7 @@ type ApiResult = {
     error?: string;
     realname?: string;
     authCookie?: string;
+    statusMessage?: string;
     popularPrinters?: PrinterDetails[];
     recentPrinters?: PrinterDetails[];
   };
